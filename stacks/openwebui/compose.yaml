@@ -18,39 +18,39 @@ services:
       webui:
         ipv4_address: ${APP_IP}
       db: null
-      aux: null
+      pgvector: null
       vectordb: null
-    # dns:
-    # - 172.64.36.1
-    # - 172.64.36.2
+      valkey: null
+      ollama: null
     extra_hosts:
       - host.docker.internal:host-gateway
     volumes:
-      - ${APPDATA}/data:/app/backend/data
-      - ${APPSTORAGE}/data:/root/.ollama
+      - ${APPDATA}/unifi:/app/backend/data
+      - ${APPSTORAGE}/shared:/app/backend/shared
+      - ${APPSTORAGE}/ollama:/root/.ollama
     depends_on:
       - ollama
+      - postgres
       - pgvector
-      - qdrant
-      - redis
+      - valkey
+      # - qdrant
     restart: unless-stopped
-
   # Ollama
   ollama:
-    image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
+    image: ollama/ollama:latest
     container_name: ollama
     hostname: ollama
     tty: true
     env_file:
       - .env
     networks:
-      webui:
-        ipv4_address: ${APP_IP_OLLAMA}
+      # webui:
+      #   ipv4_address: ${APP_IP_OLLAMA}
+      - ollama
     volumes:
       - ${APPSTORAGE}/ollama:/root/.ollama
     pull_policy: always
     restart: unless-stopped
-
   # Database: Postgres Database
   postgres:
     image: postgres:17
@@ -63,22 +63,7 @@ services:
     volumes:
       - ${DATABASE}/postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
-
-  # Vector Database: Qdrant Vector Database - Enhanced vector search performance
-  qdrant:
-    image: qdrant/qdrant:latest
-    container_name: openwebui-vectordb-qdrant
-    hostname: openwebui-vectordb-qdrant
-    networks:
-      - vectordb
-    ports:
-      - '6333:6333'
-      - '6334:6334'
-    volumes:
-      - ${DATABASE}/quadrant_data:/qdrant/storage
-    restart: unless-stopped
-
-  # Alternate Vector Database: pgvector Database - Enhanced performance and enterprise features
+  # Vector Database: pgvector Database - Enhanced performance and enterprise features
   pgvector:
     image: pgvector/pgvector:pg17
     container_name: openwebui-pgvector
@@ -90,10 +75,22 @@ services:
     volumes:
       - ${DATABASE}/pgvector_data:/var/lib/postgresql/data
     restart: unless-stopped
+  # Alternate Vector Database: Qdrant Vector Database - Enhanced vector search performance
+  # qdrant:
+  #   image: qdrant/qdrant:latest
+  #   container_name: openwebui-vectordb-qdrant
+  #   hostname: openwebui-vectordb-qdrant
+  #   networks:
+  #     - vectordb
+  #   ports:
+  #     - '6333:6333'
+  #     - '6334:6334'
+  #   volumes:
+  #     - ${DATABASE}/quadrant_data:/qdrant/storage
+  #   restart: unless-stopped
 
-  # Redis - Required for clustering and websocket support
-  # docker pull
-  redis:
+  # Valkey - Required for clustering and websocket support
+  valkey:
     image: valkey/valkey:8
     container_name: openwebui-valkey
     hostname: openwebui-valkey
@@ -102,90 +99,90 @@ services:
     networks:
       - valkey
     volumes:
-      - ${CACHE}/valkey_data:/data
-    command:
-      - redis-server --requirepass ${VALKEY_PASSWORD}
+      - ${DATABASE}/valkey:/data
+    # command:
+    # - valkey-server --requirepass ${VALKEY_PASSWORD}
     restart: unless-stopped
-
-  ## AUX Container: vscode Server
-  vscode:
-    image: lscr.io/linuxserver/code-server:latest
-    container_name: openwebui-vscode
-    hostname: openwebui-vscode
-    env_file:
-      - .env
-    networks:
-      webui:
-        ipv4_address: ${APP_IP_VSCODE}
-    ports:
-      - 8443:8443
-    volumes:
-      - ./configs/apt-cacher-ng.conf:/etc/apt/apt.conf.d/apt-cacher-ng
-      - ./configs/sudo.conf:/etc/sudoers.d/sudo.conf
-      - ${APPDATA}/vscode/config:/config
-      - ${FLATPAKS}:/config/.local/share/flatpak
-      - ${BREW}:/home/linuxbrew
-      - ${APPDATA}:/config/workspace
-      - ${HOME_VSCODE}:/config/.local
-      - ${PYENV_VSCODE}:/config/.pyenv
-      - ${SSH_VSCODE}:/config/.ssh
-      - ${NVM_VSCODE}:/config/.nvm
-    depends_on:
-      - postgres
-      - pgvector
-      - vectordb
-      - qdrant
-      - redis
-    restart: unless-stopped
+  ## AUX Containers: vscode Server
+  # vscode:
+  #   image: lscr.io/linuxserver/code-server:latest
+  #   container_name: openwebui-vscode
+  #   hostname: openwebui-vscode
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     webui:
+  #       ipv4_address: ${APP_IP_VSCODE}
+  #   ports:
+  #     - 8443:8443
+  #   volumes:
+  #     - ./configs/apt-cacher-ng.conf:/etc/apt/apt.conf.d/apt-cacher-ng
+  #     - ./configs/sudo.conf:/etc/sudoers.d/sudo.conf
+  #     - ${APPDATA}/vscode/config:/config
+  #     - ${FLATPAKS}:/config/.local/share/flatpak
+  #     - ${BREW}:/home/linuxbrew
+  #     - ${APPDATA}:/config/workspace
+  #     - ${APPSTORAGE}/shared:/config/workspace/shared
+  #     - ${HOME_VSCODE}:/config/.local
+  #     - ${PYENV_VSCODE}:/config/.pyenv
+  #     - ${SSH_VSCODE}:/config/.ssh
+  #     - ${NVM_VSCODE}:/config/.nvm
+  #   depends_on:
+  #     - postgres
+  #     - pgvector
+  #     - vectordb
+  #     - qdrant
+  #     - redis
+  #   restart: unless-stopped
 
   ## Monitoring for postgres: Adminer
-  adminer:
-    image: adminer:latest
-    container_name: adminer
-    hostname: adminer
-    env_file:
-      - .env
-    networks:
-      webui:
-        ipv4_address: ${ADMINER_IP_ADDRESS}
-    depends_on:
-      - pgvector
-    restart: unless-stopped
+  # adminer:
+  #   image: adminer:latest
+  #   container_name: adminer
+  #   hostname: adminer
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     webui:
+  #       ipv4_address: ${ADMINER_IP_ADDRESS}
+  #   depends_on:
+  #     - pgvector
+  #   restart: unless-stopped
 
   ## Monitoring for pgvector: pgAdmin for database management
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: openwebui-pgadmin
-    env_file:
-      - .env
-    networks:
-      unifi:
-        ipv4_address: ${APP_IP_PGADMIN}
-      db: null
-    volumes:
-      - ${APPDATA}/pgadmin_data:/var/lib/pgadmin
-    depends_on:
-      - pgvector
-    restart: unless-stopped
+  # pgadmin:
+  #   image: dpage/pgadmin4:latest
+  #   container_name: openwebui-pgadmin
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     unifi:
+  #       ipv4_address: ${APP_IP_PGADMIN}
+  #     db: null
+  #   volumes:
+  #     - ${APPDATA}/pgadmin_data:/var/lib/pgadmin
+  #   depends_on:
+  #     - pgvector
+  #   restart: unless-stopped
 
   ## Monitoring for redis: Redis Commander for Redis management
-  redis-commander:
-    image: rediscommander/redis-commander:latest
-    container_name: openwebui-redis-commander
-    hostname: openwebui-redis-commander
-    env_file:
-      - .env
-    environment:
-      REDIS_HOSTS: 'local:redis:6379:0:${REDIS_PASSWORD:-redis_secure_password}'
-    networks:
-      unifi:
-        ipv4_address: ${APP_IP_REDIS_COMMANDER}
-      aux: null
-    ports:
-      - '8081:8081'
-    depends_on:
-      - redis
-    restart: unless-stopped
+  # redis-commander:
+  #   image: rediscommander/redis-commander:latest
+  #   container_name: openwebui-redis-commander
+  #   hostname: openwebui-redis-commander
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     REDIS_HOSTS: 'local:redis:6379:0:${REDIS_PASSWORD:-redis_secure_password}'
+  #   networks:
+  #     unifi:
+  #       ipv4_address: ${APP_IP_REDIS_COMMANDER}
+  #     valkey: null
+  #   ports:
+  #     - '8081:8081'
+  #   depends_on:
+  #     - redis
+  #   restart: unless-stopped
 
 networks:
   db:
@@ -196,20 +193,8 @@ networks:
     internal: true
   valkey:
     internal: true
+  ollama:
+    internal: true
   webui:
     name: unifi
     external: true
-
-x-dockge:
-  urls:
-    - https://openwebui.darkcatalist.com
-    - https://vscode.openwebui.darkcatalist.com
-    - https://adminer.openwebui.darkcatalist.com
-    - https://rediscommander.openwebui.darkcatalist.com
-    - https://openwebui.services.darkcatalist.com
-    - https://openwebui.truenas.darkcatalist.com
-    - https://openwebui.unraid.darkcatalist.com
-    - https://ollama.services.darkcatalist.com
-    - https://ollama.truenas.darkcatalist.com
-    - https://ollama.unraid.darkcatalist.com
-    - https://ollama.proxmox.darkcatalist.com
