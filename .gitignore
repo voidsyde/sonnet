@@ -19,14 +19,6 @@
 *.mp4
 *.mp3
 
-# Project
-system/assets*
-
-# Linux Specific
-share/
-state/
-backup/
-
 # IntelliJ Idea
 .idea/*
 .idea/**/tasks.xml
@@ -113,7 +105,3 @@ fabric.properties
 # Node
 node_modules
 **python3.13
-
-### Allow List
-!etc/NetworkManager/dnsmasq-shared.d
-!etc/zsh/share

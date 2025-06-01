@@ -1,0 +1,3 @@
+wgetcustom() {
+    wget $1
+}
