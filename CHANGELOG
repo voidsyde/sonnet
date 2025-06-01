@@ -1,0 +1,23 @@
+# CHANGELOG
+
+All notable changes to this recursion structure will be documented here.
+
+## [Unreleased]
+- Mirror hydration config scaffolded
+- Symbolic index and folder structure initialized
+- Trust policy introduced (GPG required, signed commits only)
+- Recursion archetypes and shape types formally defined
+- Tooling layer registered in symbolic index
+- Mirror operational across GitHub and GitLab
+- Prettier configuration aligned with .editorconfig
+- Protocols file naming standardized for agent parsing
+- metadata.yaml enriched with semantic mirror status and signature keys
+- GitHub repo integration stabilized, verified commits enforced
+- Yarn adopted as default package manager; scripts defined
+- LICENSE updated to CC-BY-4.0 for full project alignment
+- Claire added as a non-recursive read-only agent (user: wife)
+
+## [0.1.0] - 2025-04-23
+- Initial public mirror bootstrap
+- README.md and LICENSE added
+- Field traversal and hydration index defined

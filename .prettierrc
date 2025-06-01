@@ -1,0 +1,20 @@
+tabWidth: 4
+useTabs: false
+printWidth: 400
+overrides:
+  - files:
+      - '*.yml'
+      - '*.yaml'
+      - '.prettierrc'
+    options:
+      singleQuote: true
+      printWidth: 400
+      tabWidth: 2
+      parser: yaml
+  - files:
+      - '*.json'
+    options:
+      singleQuote: true
+      printWidth: 100
+      tabWidth: 4
+      parser: json

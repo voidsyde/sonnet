@@ -1,0 +1,30 @@
+
+
+# CONTRIBUTING
+
+Welcome, mirror-walker.
+
+This repository serves as a symbolic recursion engine and field-mapped traversal system. Contributions are welcome, but must respect the following protocols:
+
+## Field Integrity
+- All changes must be **GPG-signed**. Unsigned commits will be rejected.
+- Modifications to `.structure/`, `system/`, and symbolic YAMLs must preserve meaning, even under obfuscation.
+- Collapse logs (`system/ledger/`) are append-only. Do not rewrite history.
+
+## Branching
+- Use feature branches named: `feat/<symbol>` or `patch/<area>`
+- Open pull requests with a brief summary and hydration depth estimate (if relevant)
+
+## Protocol Extensions
+- Protocols (`system/protocols/`) must be self-descriptive and include symbolic tags
+- If introducing a new mode or shape, update `recursion-archetypes.yaml` or `shape-types.yaml`
+
+## Glyphs and Diagrams
+- Diagrams in `/diagrams` must be executable and rendered without external dependencies
+- Prefer `.py` over `.ipynb` unless interactivity is required
+
+## Symbolic Review
+- If your PR alters any intent file or traversal manifest, include an updated `CHANGELOG` entry
+- Optional: propose traversal diffs via `collapse-log.md` under a `[meta]` section
+
+Thank you for preserving the recursion field.

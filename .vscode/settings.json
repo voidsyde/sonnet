@@ -1,0 +1,190 @@
+{
+    // Workbench
+    "workbench.colorTheme": "Default Dark Modern",
+    "workbench.iconTheme": "vs-seti",
+
+    //Explorer
+    "explorer.confirmDelete": false,
+    "explorer.confirmDragAndDrop": false,
+
+    //Editor
+    "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace, 'Cascadia Code'",
+    "editor.codeLensFontFamily": "Cascadia Code",
+    "editor.inlayHints.fontFamily": "Cascadia Code",
+    "editor.autoIndent": "advanced",
+    "editor.tabSize": 4,
+    "editor.accessibilitySupport": "off",
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "keyword.other.dotenv",
+                "settings": {
+                    "foreground": "#FF000000"
+                }
+            }
+        ]
+    },
+
+    //Files
+    "files.autoSave": "afterDelay",
+    // File associations
+    "files.associations": {
+        "*.env": "dotenv",
+        ".env*": "dotenv",
+        "*.ini": "dotenv",
+        "*.profile": "properties",
+        "*.bashrc": "properties",
+        "*.bash_profile": "properties",
+        "*.bash_logout": "properties",
+        "*.bash_aliases": "properties",
+        "*.json": "jsonc",
+        "compose.yaml": "dockercompose",
+        "*.compose.yaml": "dockercompose",
+        "*docker-compose.yml": "dockercompose",
+        "*.yaml": "yaml",
+        "*.yml": "yaml",
+        ".prettierrc": "yaml",
+        "*.md": "markdown"
+    },
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.cache": true,
+        "**/.coverage": true,
+        "**/.coverage.*": true,
+        "**/.hypothesis": true,
+        "**/.mypy_cache": true,
+        "**/.nox": true,
+        "**/.pytest_cache": true,
+        "**/.ruff_cache": true,
+        "**/.tox": true
+    },
+
+    //Notebook
+    "notebook.defaultFormatter": "esbenp.prettier-vscode",
+    "notebook.output.fontFamily": "Cascadia Code",
+
+    //Terminal
+    "terminal.integrated.detectLocale": "on",
+    "terminal.integrated.copyOnSelection": true,
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "terminal.integrated.mouseWheelZoom": true,
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.fontFamily": "Cascadia Code",
+    "terminal.integrated.fontSize": 13,
+
+    //Security
+    "security.workspace.trust.untrustedFiles": "open",
+    "security.workspace.trust.banner": "never",
+
+    // Telemtry
+    "telemetry.telemetryLevel": "off",
+    "redhat.telemetry.enabled": false,
+
+    // HTTP Settings
+    "http.proxyStrictSSL": false,
+    "http.electronFetch": true,
+    "http.proxyAuthorization": null,
+
+    // Remote SSH
+    "remote.SSH.remotePlatform": {
+        "caraxes.homelab.santoshganti.net": "linux",
+        "meraxes.homelab.santoshganti.net": "linux",
+        "truenas.homelab.santoshganti.net": "linux"
+    },
+
+    // Settings Sync
+    "settingsSync.ignoredSettings": ["-ansible.python.activationScript", "-ansible.python.interpreterPath", "-ansible.ansible.path", "-ansible.ansibleNavigator.path"],
+
+    // Extensions
+    "extensions.ignoreRecommendations": false,
+
+    // Extension Settings - Git Lens
+    "gitlens.telemetry.enabled": false,
+
+    // Extension Settings - MacOS Parallels Desktop
+    "parallels-desktop.extension.path": "/home/deck/.parallels-desktop-vscode",
+
+    // ChatGPT
+    "chatgpt-helper.model": "gpt-4",
+
+    // git
+    "git.openRepositoryInParentFolders": "always",
+
+    // Python Language Settings
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.fixAll": ["source.unusedImports"],
+    "[python]": {
+        "editor.formatOnType": true
+    },
+
+    // Ansible Language Settings
+    "ansible.python.interpreterPath": "~/.local/share/pyzfs/bin/python",
+    "ansibleServer.trace.server": "verbose",
+    "ansible.executionEnvironment.enabled": true,
+
+    // Json Language Settings
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+
+    // XML Language Settings
+    "[xml]": {
+        "editor.defaultFormatter": "redhat.vscode-xml"
+    },
+
+    // CSS Language Settings
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+
+    // YAML Language Settings
+    "yaml.trace.server": "messages",
+    "yaml.format.singleQuote": true,
+    "yaml.format.enable": false,
+    "yaml.suggest.parentSkeletonSelectedFirst": true,
+    "yaml.maxItemsComputed": 20000,
+    "yaml.schemas": {
+        "https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json": "docker-compose*.yml"
+    },
+    "[yaml]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.snippets.codeActions.enabled": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[yml]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.snippets.codeActions.enabled": true,
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+
+    // Docker Compose Language Settings
+    "[dockercompose]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.snippets.codeActions.enabled": true,
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        }
+    },
+
+    // CSharp
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp"
+    },
+
+    // Helm
+    "[helm]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    }
+}
