@@ -31,13 +31,8 @@
         "redhat.ansible",
         "shakram02.bash-beautify",
         "lizebang.bash-extension-pack",
-        "ms-vscode.makefile-tools",
-        "yzhang.markdown-all-in-one",
-        "shd101wyy.markdown-preview-enhanced",
-        "m417z.regedit",
         "pfwobcke.vscode-vdf",
         "ms-vscode.azure-repos",
-        "davidanson.vscode-markdownlint",
-        "openai.chatgpt"
+        "ms-dotnettools.csharp"
     ]
 }
