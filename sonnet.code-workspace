@@ -1,0 +1,116 @@
+{
+  "folders": [
+    {
+      "path": "/home/sganti/ode/gitlab/minisuperspace/obsidian/separatrix"
+    },
+    {
+      "path": "/home/sganti/ode/developmentenvironment"
+    },
+    {
+      "path": "/home/sganti/.local"
+    },
+    {
+      "path": "../../../helicatenoid/models/sonnet"
+    }
+  ],
+  "extensions": {
+    "recommendations": [
+      "ms-vscode-remote.remote-containers",
+      "mikestead.dotenv",
+      "Nixon.env-cmd-file-syntax",
+      "nico-castell.linux-desktop-file",
+      "ms-vscode-remote.remote-ssh",
+      "ms-vscode-remote.remote-ssh-edit",
+      "ms-vscode.remote-server",
+      "ms-vscode.remote-explorer",
+      "ms-vscode.remote-repositories",
+      "Remisa.shellman",
+      "EditorConfig.EditorConfig",
+      "GitHub.copilot",
+      "GitHub.copilot-chat",
+      "eamodio.gitlens",
+      "esbenp.prettier-vscode",
+      "rvest.vs-code-prettier-eslint",
+      "ms-python.python",
+      "ms-python.debugpy",
+      "redhat.vscode-xml",
+      "ms-azuretools.vscode-containers",
+      "redhat.vscode-yaml"
+
+    ],
+    "unwantedRecommendations": [
+      "ms-vscode-remote.remote-wsl",
+      "vscjava.vscode-java-pack",
+      "ms-dotnettools.vscodeintellicode-csharp",
+      "vscjava.vscode-maven",
+      "ParallelsDesktop.parallels-desktop",
+      "VisualStudioExptTeam.vscodeintellicode",
+      "VisualStudioExptTeam.intellicode-api-usage-examples",
+      "ms-vscode.vscode-typescript-next",
+      "redhat.java",
+      "vscjava.vscode-java-dependency",
+      "vscjava.vscode-java-test",
+      "hangxingliu.vscode-systemd-support",
+      "coolbear.systemd-unit-file",
+      "RevivoZ.systemd-manager",
+      "kweihmann.systemdlint-vscode",
+      "redhat.ansible",
+      "ms-dotnettools.csharp",
+      "ms-vscode.makefile-tools",
+      "yzhang.markdown-all-in-one",
+      "ms-edgedevtools.vscode-edge-devtools",
+      "shd101wyy.markdown-preview-enhanced",
+      "m417z.regedit",
+      "DavidAnson.vscode-markdownlint",
+      "ms-vscode.vscode-websearchforcopilot",
+      "shakram02.bash-beautify",
+      "Remisa.shellman",
+      "ms-vscode.PowerShell"
+    ]
+  },
+  "settings": {
+    "files.autoSave": "afterDelay",
+    "editor.formatOnSave": true,
+    "yaml.trace.server": "messages",
+    "files.autoSaveWhenNoErrors": true,
+    "files.autoSaveWorkspaceFilesOnly": true,
+    "workbench.preferredHighContrastLightColorTheme": "Default High Contrast Light",
+    "telemetry.feedback.enabled": false,
+    "bashIde.shfmt.spaceRedirects": true,
+    "github.copilot.chat.search.keywordSuggestions": true,
+    "github.copilot.chat.agent.autoFix": false,
+    "github.copilot.chat.followUps": "never",
+    "github.copilot.renameSuggestions.triggerAutomatically": false,
+    "github.copilot.chat.editor.temporalContext.enabled": true,
+    "github.copilot.chat.completionContext.typescript.mode": "off",
+    "github.copilot.chat.byok.ollamaEndpoint": "https://ollama.truenas.darkcatalist.com",
+    "github.copilot.chat.localeOverride": "en",
+    "github.copilot.chat.codesearch.enabled": true,
+    "github.copilot.chat.agent.thinkingTool": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.fontFamily": "Cascadia Code",
+    "editor.codeLensFontFamily": "Cascadia Code",
+    "editor.inlayHints.fontFamily": "Cascadia Code",
+    "editor.autoIndent": "advanced",
+    "editor.tabSize": 4,
+    "editor.accessibilitySupport": "off",
+    "editor.unicodeHighlight.nonBasicASCII": false,
+    "editor.parameterHints.enabled": false,
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.tabCompletion": "off",
+    "editor.wordBasedSuggestions": "off",
+    "editor.suggest.insertMode": "replace",
+    "editor.suggest.filterGraceful": false,
+    "editor.suggest.localityBonus": false,
+    "editor.suggest.shareSuggestSelections": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggest.showKeywords": false,
+    "editor.suggest.showSnippets": false,
+    "editor.suggest.showClasses": false,
+    "editor.suggest.showFunctions": false,
+    "editor.suggest.showVariables": false,
+    "editor.inlineSuggest.enabled": false
+  }
+}
