@@ -1,0 +1,36 @@
+# Qdrant Vector Database - Enhanced vector search performance
+# Icon: https://raw.githubusercontent.com/patrickstigler/unraid_app_templates/refs/heads/main/qdrant/qdrant.png
+# IP: 192.168.6.133
+services:
+  qdrant:
+    image: qdrant/qdrant:gpu-nvidia-latest
+    container_name: openwebui-qdrant
+    hostname: openwebui-qdrant
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities:
+                - gpu
+    runtime: nvidia
+    environment:
+      QDRANT__LOG_LEVEL: INFO
+      QDRANT__SERVICE__HOST: 0.0.0.0
+      QDRANT__CLUSTER__ENABLED: true
+      RUN_MODE: production
+    network_mode: host
+    command: ./qdrant --uri 'http://${QDRANT__SERVICE__HOST}:6335'
+    volumes:
+      - ./configs/distributed.yaml:/qdrant/config/production.yaml:ro
+      - ${APPDATA}/qdrant_data:/qdrant/storage
+    restart: unless-stopped
+networks: {}
+x-dockge:
+  urls:
+    - http://10.0.0.20:6333/dashboard
+    - http://10.0.0.41:6333/dashboard
+    - http://10.0.0.42:6333/dashboard
+    - http://10.0.0.43:6333/dashboard
+    - http://10.0.0.44:6333/dashboard

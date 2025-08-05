@@ -1,0 +1,71 @@
+log_level: DEBUG
+
+feature_flags:
+  all: true
+
+inference:
+  address: 'http://localhost:2114/api/v1/infer'
+  timeout: 10
+  token: '98eb568c-dea5-4347-a3a5-583478983bb9'
+
+service:
+  # host: 127.0.0.1
+  host: 10.0.0.20
+  http_port: 6333
+  # Uncomment to enable gRPC:
+  #grpc_port: 6334
+  #api_key: your_secret_api_key_here
+
+cluster:
+  resharding_enabled: true
+
+storage:
+  performance:
+    # Number of parallel threads used for search operations. If 0 - auto selection.
+    max_search_threads: 4
+
+  optimizers:
+    # Minimum interval between forced flushes.
+    flush_interval_sec: 5
+
+    # Do not create too much segments in dev
+    default_segment_number: 2
+
+  handle_collection_load_errors: true
+
+gpu:
+  # Enable GPU indexing.
+  indexing: false
+  # Force half precision for `f32` values while indexing.
+  # `f16` conversion will take place
+  # only inside GPU memory and won't affect storage type.
+  force_half_precision: false
+  # Used vulkan "groups" of GPU.
+  # In other words, how many parallel points can be indexed by GPU.
+  # Optimal value might depend on the GPU model.
+  # Proportional, but doesn't necessary equal
+  # to the physical number of warps.
+  # Do not change this value unless you know what you are doing.
+  # Default: 512
+  groups_count: 512
+  # Filter for GPU devices by hardware name. Case insensitive.
+  # Comma-separated list of substrings to match
+  # against the gpu device name.
+  # Example: "nvidia"
+  # Default: "" - all devices are accepted.
+  device_filter: ''
+  # List of explicit GPU devices to use.
+  # If host has multiple GPUs, this option allows to select specific devices
+  # by their index in the list of found devices.
+  # If `device_filter` is set, indexes are applied after filtering.
+  # By default, all devices are accepted.
+  devices: null
+  # How many parallel indexing processes are allowed to run.
+  # Default: 1
+  parallel_indexes: 1
+  # Allow to use integrated GPUs.
+  # Default: false
+  allow_integrated: false
+  # Allow to use emulated GPUs like LLVMpipe. Useful for CI.
+  # Default: false
+  allow_emulated: false

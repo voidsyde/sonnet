@@ -1,4 +1,0 @@
-[Container]
-ContainerName=nginx
-Image=docker.io/nginxinc/nginx-unprivileged
-PublishPort=41080:8080

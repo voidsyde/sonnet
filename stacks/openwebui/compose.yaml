@@ -1,3 +1,16 @@
+################################################### OpenWebUI ###################################################
+# Icon: https://raw.githubusercontent.com/open-webui/open-webui/main/static/favicon.png
+# openwebui - 192.168.6.130
+# ollama - 192.168.6.131
+# pgvector - 192.168.6.132
+# qdrant - 192.168.6.133
+# valkey - 192.168.6.134
+# jupyter - 192.168.6.135
+# browserless - 192.168.6.136
+# playwright - 192.168.6.137
+# tika - 192.168.6.138
+# docling - 192.168.6.139
+# searxng - 192.168.6.140
 services:
   openwebui:
     image: ghcr.io/open-webui/open-webui:main
@@ -12,48 +25,75 @@ services:
               capabilities:
                 - gpu
     runtime: nvidia
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     environment:
       # OpenWebUI
-      WEBUI_NAME: ${OPENWEBUI_WEBUI_NAME}
-      WEBUI_URL: ${OPENWEBUI_WEBUI_URL}
+      ENV: ${OPENWEBUI_OPERATIONAL_MODE:-dev}
+      HOST: ${OPENWEBUI_BIND_HOST:-0.0.0.0}
+      WEBUI_NAME: ${OPENWEBUI_WEBUI_NAME:-OpenWebUI}
+      WEBUI_URL: ${OPENWEBUI_WEBUI_URL:-'http://openwebui:31028'}
       WEBUI_SECRET_KEY: ${OPENWEBUI_WEBUI_SECRET_KEY}
-      OPENAI_API_KEY: ${OPENWEBUI_OPENROUTER_API_KEY}
-      # Postgres
-      DB_DATABASE_URL: ${OPENWEBUI_PGVECTOR_DB_URL}
-      # PgVector
-      VECTOR_DB: ${OPENWEBUI_VECTOR_DB}
-      PGVECTOR_DB_URL: ${OPENWEBUI_PGVECTOR_DB_URL}
-      # Ollama
-      OLLAMA_BASE_URL: ${OPENWEBUI_OLLAMA_BASE_URL}
-      # VALKEY
-      REDIS_URL: ${OPENWEBUI_VALKEY_URL}
-      # SMTP
-      SMTP_SERVER: ${OPENWEBUI_SMTP_SERVER}
-      SMTP_PORT: ${OPENWEBUI_SMTP_PORT}
-      SMTP_USERNAME: ${OPENWEBUI_SMTP_USERNAME}
-      SMTP_PASSWORD: ${OPENWEBUI_SMTP_PASSWORD}
-      SMTP_USE_TLS: ${OPENWEBUI_SMTP_USE_TLS}
-      SMTP_FROM_EMAIL: ${OPENWEBUI_SMTP_FROM_EMAIL}
-      SMTP_FROM_NAME: ${OPENWEBUI_SMTP_FROM_NAME}
+      USER_AGENT: ${OPENWEBUI_USER_AGENT:-'OpenWebUI/1.0 (+http://openwebui:31028) LangChain'}
+      UVICORN_WORKERS: ${OPENWEBUI_UVICORN_WORKERS:-4}
+      ######## Postgres ########
+      DATABASE_URL: ${OPENWEBUI_DB_DATABASE_URL:-'postgresql://openwebui:openwebui@openwebui-postgres:5432/openwebui'}
+      ######## VectorDB ########
+      VECTOR_DB: ${OPENWEBUI_VECTOR_DB:-qdrant}
+      ######## PgVector ########
+      # PGVECTOR_DB_URL: ${OPENWEBUI_PGVECTOR_DB_URL:-'postgresql://openwebui:openwebui@openwebui-postgres:5432/openwebui'}
+      # PGVECTOR_INITIALIZE_MAX_VECTOR_LENGTH: ${OPENWEBUI_PGVECTOR_MAX_VECTOR_LENGTH:-1536}
+      ######## Qdrant ########
+      QDRANT_URI: ${OPENWEBUI_QDRANT_URI:-http://openwebui-qdrant:6333}
+      # QDRANT_API_KEY: ${CLUSTER_QDRANT_DB_SECRET_KEY}
+      ENABLE_QDRANT_MULTITENANCY_MODE: ${OPENWEBUI_QDRANT_ENABLE_MULTITENANCY_MODE:-true}
+      QDRANT_ON_DISK: ${OPENWEBUI_QDRANT_ON_DISK:-true}
+      QDRANT_PREFER_GRPC: ${OPENWEBUI_QDRANT_PREFER_GRPC:-true}
+      QDRANT_GRPC_PORT: ${OPENWEBUI_QDRANT_GRPC_PORT:-6334}
+      QDRANT_COLLECTION_PREFIX: ${OPENWEBUI_QDRANT_COLLECTION_PREFIX:-openwebui-truenas}
+      ######## Ollama ########
+      OLLAMA_BASE_URL: ${OPENWEBUI_OLLAMA_BASE_URL:-'http://openwebui-ollama:11434'}
+      ######## VALKEY ########
+      REDIS_URL: ${OPENWEBUI_VALKEY_URL:-'http://openwebui-valkey:6379/0'}
+      ######### OpenTelemetry ########
+      ENABLE_OTEL: ${OPENWEBUI_ENABLE_OTEL:-true}
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OPENWEBUI_OTEL_EXPORTER_OTLP_ENDPOINT:-http://openwebui-opentelemetry:4318}
+      OTEL_EXPORTER_OTLP_INSECURE: ${OPENWEBUI_OTEL_EXPORTER_OTLP_INSECURE:-http://openwebui-opentelemetry:4318}
+      OTEL_SERVICE_NAME: ${OTEL_SERVICE_NAME:-openwebui}
+      ENABLE_OTEL_METRICS: ${ENABLE_OTEL_METRICS:-true}
+      ######### RAG Template Settings ########
+      RAG_EMBEDDING_MODEL: ${RAG_EMBEDDING_MODEL:-'bge-m3:latest'}
+      RAG_RERANKING_MODEL: ${RAG_RERANKING_MODEL:-'bge-reranker-v2-m3:latest'}
+      RAG_EMBEDDING_MODEL_AUTO_UPDATE: ${RAG_EMBEDDING_MODEL_AUTO_UPDATE:-false}
+      RAG_RERANKING_MODEL_AUTO_UPDATE: ${RAG_RERANKING_MODEL_AUTO_UPDATE:-false}
+      ######### CUDA Settings (Only for older nvidia devices if using cuda image) ########
+      # CUDA_LAUNCH_BLOCKING: 1
+      # TORCH_CUDA_ARCH_LIST: 6.1
+      ######### NVIDIA Settings #########
+      NVIDIA_DRIVER_CAPABILITIES: all
+      NVIDIA_VISIBLE_DEVICES: all
     networks:
-      openwebui:
-        ipv4_address: ${APP_IP_OPENWEBUI}
-      pgvector: null
-      valkey: null
+      - openwebui
+      - valkey
+      - ollama
+      - tika
+    ports:
+      - 31028:8080
     extra_hosts:
       - host.docker.internal:host-gateway
     volumes:
-      - ${APPDATA}/data:/app/backend/data
-      - ${APPSTORAGE}/shared:/app/backend/shared
-      - ${APPSTORAGE}/ollama:/root/.ollama
+      - ${APPSTORAGE}/data:/app/backend/data
+      - ${APPSTORAGE}/ollama/data:/root/.ollama
     depends_on:
       - ollama
-      - pgvector
       - valkey
+      - tika
+      - playwright
+    labels:
+      ## Integration with diun if notifications for updates are needed along with auto update
+      diun.enable: true
     restart: unless-stopped
-  # Ollama
+  ################################################### Ollama ###################################################
   ollama:
     image: ollama/ollama:latest
     container_name: openwebui-ollama
@@ -69,116 +109,131 @@ services:
     runtime: nvidia
     tty: true
     pull_policy: always
-    env_file:
-      - .env
     environment:
-      OLLAMA_KEEP_ALIVE: ${OPENWEBUI_OLLAMA_KEEP_ALIVE}
+      OLLAMA_KEEP_ALIVE: 2h
+      OLLAMA_FLASH_ATTENTION: true
+      OLLAMA_CONTEXT_LENGTH: 8192
+      NVIDIA_DRIVER_CAPABILITIES: all
+      NVIDIA_VISIBLE_DEVICES: all
+      OLLAMA_LLM_LIBRARY: cuda_v11
+      OLLAMA_KV_CACHE_TYPE: fp16
+      OLLAMA_MAX_LOADED_MODELS: 1
+      # OLLAMA_GPU_OVERHEAD: 0
+      # OLLAMA_INTEL_GPU: false
+      # OLLAMA_KV_CACHE_TYPE:
+      # OLLAMA_LLM_LIBRARY:
+      # OLLAMA_NEW_ENGINE: false
+      # OLLAMA_MULTIUSER_CACHE: false
+      # OLLAMA_NOHISTORY: false
+      # OLLAMA_NOPRUNE: false
+      # OLLAMA_NUM_PARALLEL: 0
+      OLLAMA_ORIGINS: '*'
     networks:
       - ollama
     ports:
-      - 7869:11434
+      - 11434:11434
     volumes:
-      - ${APPSTORAGE}/shared:/code
-      - ${APPSTORAGE}/ollama:/root/.ollama
+      - ${APPSTORAGE}/ollama/data:/root/.ollama
     restart: unless-stopped
-  # Vector Database: pgvector Database - Enhanced performance and enterprise features
-  pgvector:
-    image: pgvector/pgvector:pg17
-    container_name: openwebui-pgvector
-    hostname: ${OPENWEBUI_PGVECTOR_HOST}
-    env_file:
-      - .env
-    tmpfs:
-      - /dev/shm:size=128m
-    environment:
-      POSTGRES_USER: ${OPENWEBUI_PGVECTOR_USER}
-      POSTGRES_PASSWORD: ${OPENWEBUI_PGVECTOR_PASSWORD}
-      POSTGRES_DB: ${OPENWEBUI_PGVECTOR_DB}
-      PGVECTOR_MAX_VECTOR_LENGTH: ${OPENWEBUI_PGVECTOR_MAX_VECTOR_LENGTH}
-      POSTGRES_MAX_CONNECTIONS: ${OPENWEBUI_POSTGRES_MAX_CONNECTIONS}
-      PGVECTOR_CHUNK_SIZE: ${OPENWEBUI_PGVECTOR_CHUNK_SIZE}
-      UVICORN_WORKERS: ${OPENWEBUI_UVICORN_WORKERS}
-    networks:
-      - pgvector
-    volumes:
-      - ${DATABASE}/pgvector_data:/var/lib/postgresql/data
-    restart: unless-stopped
+  ################################################### valkey ###################################################
   # Valkey - Required for clustering and websocket support
+  # Icon: https://cdn.jsdelivr.net/gh/loganmarchione/homelab-svg-assets//assets/valkey.svg
+  # IP: 192.168.6.134
   valkey:
     image: valkey/valkey:8
     container_name: openwebui-valkey
-    hostname: ${OPENWEBUI_VALKEY_HOST}
+    hostname: ${OPENWEBUI_VALKEY_HOST:-openwebui-valkey}
     env_file:
       - .env
     tmpfs:
       - /dev/shm:size=128m
     networks:
       - valkey
+    ports:
+      - 6379:6379
     volumes:
       - ${DATABASE}/valkey:/data
     command: valkey-server --requirepass "${OPENWEBUI_VALKEY_PASSWORD}" --save ""
+    labels:
+      diun.enable: true
     restart: unless-stopped
-  ## AUX Containers: vscode Server
-  vscode:
-    image: lscr.io/linuxserver/code-server:latest
-    container_name: openwebui-vscode
-    hostname: openwebui-vscode
-    tmpfs:
-      - /dev/shm:size=128m
+  ################################################### Tika ###################################################
+  tika:
+    image: docker.io/apache/tika:latest
+    container_name: openwebui-tika
+    hostname: ${OPENWEBUI_TIKA_HOST:-openwebui-tika}
     env_file:
       - .env
-    environment:
-      SUDO_PASSWORD: ${OPENWEBUI_VSCODE_SUDO_PASSWORD}
-      DEFAULT_WORKSPACE: ${OPENWEBUI_VSCODE_DEFAULT_WORKSPACE}
-      KEEPALIVE_INTERVAL: ${OPENWEBUI_VSCODE_KEEPALIVE_INTERVAL}
-      KEEPALIVE_TIMEOUT: ${OPENWEBUI_VSCODE_KEEPALIVE_TIMEOUT}
-      PROXY_DOMAIN: ${OPENWEBUI_VSCODE_PROXY_DOMAIN}
     networks:
-      openwebui:
-        ipv4_address: ${OPENWEBUI_VSCODE_APP_IP}
-      pgvector: null
-      ollama: null
-      valkey: null
+      - tika
     ports:
-      - 8443:8443
-    volumes:
-      - ./configs/apt-cacher-ng.conf:/etc/apt/apt.conf.d/apt-cacher-ng
-      - ./configs/sudo.conf:/etc/sudoers.d/sudo.conf
-      - ${APPDATA_VSCODE}/config:/config
-      - ${APPDATA_VSCODE}/linuxbrew:/home/linuxbrew
-      - ${APPDATA_VSCODE}/flatpak:/config/.local/share/flatpak
-      - ${APPDATA_VSCODE}/workspace:/config/workspace
-      - ${HOME_VSCODE}/.local:/config/.local
-      - ${HOME_VSCODE}/.pyenv:/config/.pyenv
-      - ${HOME_VSCODE}/.ssh:/config/.ssh
-      - ${HOME_VSCODE}/.nvm:/config/.nvm
-      - ${APPSTORAGE}/shared:/config/workspace/shared
-    depends_on:
-      - openwebui
-      - ollama
-      - pgvector
-      - valkey
+      - 9998:9998
+    labels:
+      diun.enable: true
     restart: unless-stopped
-  ## Monitoring for postgres: Adminer
-  adminer:
-    image: adminer:latest
-    container_name: openwebui-adminer
-    hostname: openwebui-adminer
+  ################################################### Playwright ###################################################
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.49.1-noble
+    container_name: openwebui-playwright
+    hostname: openwebui-playwright
     env_file:
       - .env
+    shm_size: 1g
+    stdin_open: true
+    tty: true
+    user: pwuser
+    init: true
+    working_dir: /home/pwuser
+    environment:
+      PLAYWRIGHT_TIMEOUT: 300000
+      PLAYWRIGHT_NAVIGATION_TIMEOUT: 90000 # Increased for PDFs
+      PLAYWRIGHT_DEFAULT_TIMEOUT: 45000 # Increased
+      # Enhanced browser arguments for better compatibility
+      PLAYWRIGHT_CHROMIUM_ARGS: >-
+        --no-sandbox
+        --disable-setuid-sandbox
+        --disable-dev-shm-usage
+        --disable-http2
+        --disable-gpu-sandbox
+        --disable-software-rasterizer
+        --disable-background-timer-throttling
+        --disable-backgrounding-occluded-windows
+        --disable-renderer-backgrounding
+        --disable-features=TranslateUI,VizDisplayCompositor
+        --js-flags="--max_old_space_size=8192"
+    command: /bin/sh -c "npx -y playwright@1.49.1 run-server --port 32051 --host 0.0.0.0"
+    security_opt:
+      - seccomp:unconfined
     networks:
-      openwebui:
-        ipv4_address: ${OPENWEBUI_ADMINER_APP_IP}
-    depends_on:
-      - pgvector
+      - openwebui
+    ports:
+      - 32051:32051
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:32051/']
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      diun.enable: true
     restart: unless-stopped
 networks:
-  pgvector:
-    internal: true
-  valkey:
-    internal: true
   ollama:
     internal: true
   openwebui:
-    name: unifi
-    external: true
+    driver: bridge
+  valkey:
+    internal: true
+  tika:
+    internal: true
+  jupyterlab:
+    driver: bridge
+  # openwebui:
+  #   name: unifi
+  #   external: true
+x-dockge:
+  urls:
+    - https://openwebui.services.darkcatalist.com
+    - https://openwebui.truenas.darkcatalist.com
+    - https://openwebui.caraxes.darkcatalist.com
+    - https://ollama.com/search

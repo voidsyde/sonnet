@@ -1,31 +1,17 @@
 [*]
 indent_style = space
-indent_size = 4
+indent_size = 2
 trim_trailing_whitespace = true
 
-[*.md]
+[*.{md,yml,yaml,json,code-workspace}]
 indent_style = space
 tab_width = 2
-
-[*.yml]
-indent_style = space
-indent_size = 2
-
-[*.yaml]
-indent_style = space
-indent_size = 2
-
-# 4 spaces
-
-[*.sh]
-indent_style = space
-indent_size = 4
 trim_trailing_whitespace = true
 
-[*.py]
+# 4 spaces
+[*.{h,cc,cpp,cs,java,sh,zsh,py}]
 indent_style = space
 indent_size = 4
-max_line_length = 120
 
 # 4 tabs
 [*.refind.conf]
@@ -36,19 +22,7 @@ tab_width = 4
 indent_style = tab
 tab_width = 4
 
-[*.{h,cc,cpp,cs,java,json}]
-indent_style = space
-indent_size = 4
-
 # 8 Tabs
-[*.{conf,cfg,hosts.conf,fstab.conf}]
-indent_style = tab
-tab_width = 8
-
-[*.list.conf]
-indent_style = tab
-tab_width = 8
-
-[*.smb.conf]
+[*.{conf,cfg,hosts.conf,fstab.conf,list.conf,smb.conf}]
 indent_style = tab
 tab_width = 8

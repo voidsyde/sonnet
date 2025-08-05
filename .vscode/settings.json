@@ -1,148 +1,94 @@
 {
-  // General
-  "window.zoomLevel": 1,
-  // Workbench:
-  /*
-      These settings control the appearance and behavior of the VS Code workbench UI.
-      - `workbench.colorTheme`: Sets the color theme for the editor.
-      - `workbench.iconTheme`: Sets the icon theme for files and folders.
-      - `workbench.editor.defaultBinaryEditor`: Sets the default editor for binary files.
-      - `workbench.editor.enablePreviewFromQuickOpen`: Enables preview mode when opening files from Quick Open.
-      - `workbench.startupEditor`: Controls which editor is shown at startup.
-      - `workbench.settings.applyToAllProfiles`: Specifies settings to apply to all profiles.
-      - `workbench.editorAssociations`: Associates file patterns with specific editors.
-    */
   "workbench.colorTheme": "Default Dark Modern",
   "workbench.iconTheme": "vs-seti",
-  "workbench.editor.defaultBinaryEditor": "vscode.markdown.preview.editor",
+  "workbench.editor.defaultBinaryEditor": "default",
   "workbench.editor.enablePreviewFromQuickOpen": true,
   "workbench.startupEditor": "welcomePageInEmptyWorkbench",
-  "workbench.settings.applyToAllProfiles": [
-    "github.copilot.chat.byok.ollamaEndpoint",
-    "github.copilot.chat.editor.temporalContext.enabled",
-    "github.copilot.chat.edits.newNotebook.enabled",
-    "github.copilot.chat.copilotDebugCommand.enabled",
-    "chat.edits2.enabled"
-  ],
   "workbench.editorAssociations": {
     "*.copilotmd": "vscode.markdown.preview.editor",
-    "*.md": "markdown-notebook"
+    "*.md": "default"
   },
   // Explorer
-  /*
-    These settings control the behavior of the file explorer in VS Code.
-    - `explorer.autoReveal`: Automatically reveal the file in the explorer when opened.
-    - `explorer.openEditors.visible`: Controls the visibility of open editors in the explorer.
-    - `explorer.confirmDelete`: Disable confirmation dialog when deleting files.
-    - `explorer.confirmDragAndDrop`: Disable confirmation dialog when dragging and dropping files.
-    */
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
-  // Editor:
-  /*
-    These settings control the behavior of the code editor in VS Code.
-    - `editor.formatOnSave`: Automatically format the code when saving.
-    - `editor.defaultFormatter`: Specifies the default formatter for the editor.
-    - `editor.fontFamily`: Sets the font family for the editor.
-    - `editor.codeLensFontFamily`: Sets the font family for CodeLens in the editor.
-    - `editor.inlayHints.fontFamily`: Sets the font family for inlay hints in the editor.
-    - `editor.autoIndent`: Controls the auto-indentation behavior.
-    - `editor.tabSize`: Sets the number of spaces per tab.
-    - `editor.accessibilitySupport`: Controls accessibility features in the editor.
-    - `editor.unicodeHighlight.nonBasicASCII`: Disables highlighting of non-basic ASCII characters.
-    - `editor.quickSuggestions`: Controls quick suggestions in the editor.
-    - `editor.suggestOnTriggerCharacters`: Disables suggestions on trigger characters.
-    - `editor.tokenColorCustomizations`: Customizes token colors in the editor.
-    - `editor.defaultFormatter`: Specifies the default formatter for the editor.
-    - `editor.fontFamily`: Sets the font family for the editor.
-    - `editor.codeLensFontFamily`: Sets the font family for CodeLens in the editor.
-    - `editor.inlayHints.fontFamily`: Sets the font family for inlay hints in the editor.
-    - `editor.autoIndent`: Controls the auto-indentation behavior.
-    - `editor.tabSize`: Sets the number of spaces per tab.
-    - `editor.accessibilitySupport`: Controls accessibility features in the editor.
-    - `editor.unicodeHighlight.nonBasicASCII`: Disables highlighting of non-basic ASCII characters.
-    - `editor.quickSuggestions`: Controls quick suggestions in the editor.
-    - `editor.suggestOnTriggerCharacters`: Disables suggestions on trigger characters.
-    - `editor.tokenColorCustomizations`: Customizes token colors in the editor.
-    - `editor.defaultFormatter`: Specifies the default formatter for the editor.
-    - `editor.fontFamily`: Sets the font family for the editor.
-    - `editor.codeLensFontFamily`: Sets the font family for CodeLens in the editor.
-    - `editor.inlayHints.fontFamily`: Sets the font family for inlay hints in the editor.
-    - `editor.autoIndent`: Controls the auto-indentation behavior.
-    - `editor.tabSize`: Sets the number of spaces per tab.
-    - `editor.accessibilitySupport`: Controls accessibility features in the editor.
-    - `editor.unicodeHighlight.nonBasicASCII`: Disables highlighting of non-basic ASCII characters.
-    - `editor.quickSuggestions`: Controls quick suggestions in the editor.
-    - `editor.suggestOnTriggerCharacters`: Disables suggestions on trigger characters.
-    - `editor.tokenColorCustomizations`: Customizes token colors in the editor.
-    */
+  //Editor
+  "editor.fontSize": 14,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.fontFamily": "Cascadia Code",
   "editor.codeLensFontFamily": "Cascadia Code",
   "editor.inlayHints.fontFamily": "Cascadia Code",
   "editor.autoIndent": "advanced",
-  "editor.tabSize": 4,
+  "editor.tabSize": 2,
   "editor.accessibilitySupport": "off",
-  "editor.unicodeHighlight.nonBasicASCII": false,
-  "editor.parameterHints.enabled": false,
-  "editor.suggestOnTriggerCharacters": false,
-  "editor.acceptSuggestionOnEnter": "off",
-  "editor.acceptSuggestionOnCommitCharacter": false,
-  "editor.tabCompletion": "off",
-  "editor.wordBasedSuggestions": "off",
-  "editor.suggest.insertMode": "replace",
-  "editor.suggest.filterGraceful": false,
-  "editor.suggest.localityBonus": false,
-  "editor.suggest.shareSuggestSelections": false,
-  "editor.suggest.snippetsPreventQuickSuggestions": false,
-  "editor.suggest.showKeywords": false,
-  "editor.suggest.showSnippets": false,
-  "editor.suggest.showClasses": false,
-  "editor.suggest.showFunctions": false,
-  "editor.suggest.showVariables": false,
-  "editor.inlineSuggest.enabled": false,
-  "editor.quickSuggestions": {
-    "other": "off",
-    "comments": "off",
-    "strings": "off"
+  "editor.tokenColorCustomizations": {
+    "[*Light*]": {
+      "textMateRules": [
+        {
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#000"
+          }
+        }
+      ]
+    },
+    "[*Dark*]": {
+      "textMateRules": [
+        {
+          "scope": "ref.matchtext",
+          "settings": {
+            "foreground": "#fff"
+          }
+        }
+      ]
+    },
+    "textMateRules": [
+      {
+        "scope": "keyword.other.dotenv",
+        "settings": {
+          "foreground": "#FF000000"
+        }
+      }
+    ]
   },
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.quickSuggestions": {
+    "other": false,
+    "comments": false,
+    "strings": false
+  },
+  "editor.inlineSuggest.enabled": false,
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.acceptSuggestionOnEnter": "smart",
+  "editor.tabCompletion": "off",
+  "editor.parameterHints.enabled": false,
   /*
     Files:
   */
   "files.autoSave": "afterDelay",
+  "files.enableTrash": false,
   "files.associations": {
-    //dotenv
     "*.env": "dotenv",
     ".env*": "dotenv",
-    //properties
-    "*.ini": "properties",
+    "*.ini": "dotenv",
     "*.nmconnection": "properties",
     "*.list": "properties",
-    //shellscript
-    "*.profile": "shellscript",
-    "*.bashrc": "shellscript",
-    "*.bash_profile": "shellscript",
-    "*.bash_logout": "shellscript",
-    "*.bash_aliases": "shellscript",
-    //jsonc
+    "*.profile": "properties",
+    "*.bashrc": "properties",
+    "*.bash_profile": "properties",
+    "*.bash_logout": "properties",
+    "*.bash_aliases": "properties",
     "*.json": "jsonc",
-    //dockercompose
     "compose.yaml": "dockercompose",
     "docker-compose.yaml": "dockercompose",
     "*.compose.yaml": "dockercompose",
     "*docker-compose.yml": "dockercompose",
-    //yaml
     "*.yaml": "yaml",
     "*.yml": "yaml",
     ".prettierrc": "yaml",
-    //markdown
     "*.md": "markdown",
-    //ssh_config
     "*.sources": "ssh_config",
     "*.ssh/config": "ssh_config",
-    //javascript
     "*.rules": "properties",
-    //SSH Config
     "*/ssh/config": "ssh_config",
     "*.ssh.config": "ssh_config"
   },
@@ -165,112 +111,15 @@
       These settings are ignored in Settings Sync to prevent environment-specific
       configurations from being synced across different machines or environments.
   */
-  "settingsSync.ignoredSettings": [
-    "-ansible.python.activationScript",
-    "-ansible.python.interpreterPath",
-    "-ansible.ansible.path",
-    "-ansible.ansibleNavigator.path"
-  ],
+  "settingsSync.ignoredSettings": [ ],
   // Extensions
   "extensions.ignoreRecommendations": true,
-  //// Allowed Extensions
-  /*
-    This setting allows you to specify which extensions are allowed to be installed
-    in the VS Code environment. It is useful for controlling the extensions that can
-    be used in a specific workspace or environment.
-  */
-  "extensions.ignoreList": [
-    "ms-vscode.vscode-typescript-next",
-    "ms-vscode.vscode-typescript-tslint-plugin",
-    "ms-vscode.vscode-typescript-language-features",
-    "ms-vscode.vscode-typescript-language-features-next",
-    "ms-vscode.vscode-typescript-language-features-next-next"
-  ],
   "extensions.allowed": {
-    // Enabled Extensions
-    "microsoft": true,
-    "github": true,
-    "GitHub": true,
-    "redhat": true,
-    "oracle": true,
-    "gitpod": true,
-    "Shopify": true,
-    "openai": true,
-    "docker": true,
-    "ParallelsDesktop": true,
-    "ms-vscode-remote": true,
-    "ms-python": true,
-    "ms-dotnettools": true,
-    "ms-vscode": true,
-    "esbenp.prettier-vscode": true,
-    "bysabi.prettier-vscode-standard": true,
-    "bodil.prettier-toml": true,
-    "coolbear.systemd-unit-file": true,
-    "EditorConfig.EditorConfig": true,
-    "foxundermoon.shell-format": true,
-    "davidwang.ini-for-vscode": true,
-    "njpwerner.autodocstring": true,
-    "revivoz.systemd-manager": true,
-    "sumneko.lua": true,
-    "tamasfe.even-better-toml": true,
-    "GEEKiDoS.vdf": true,
-    "ms-dotnettools.csharp": true,
-    "ms-azuretools.vscode-docker": true,
-    "hangxingliu.vscode-systemd-support": true,
-    "jinxdash.prettier-rust": true,
-    "kweihmann.systemdlint-vscode": true,
-    "mikestead.dotenv": true,
-    "nico-castell.linux-desktop-file": true,
-    "rvest.vs-code-prettier-eslint": true,
-    "dbaeumer.vscode-eslint": true,
-    "figma.figma-vscode-extension": true,
-    "rust-lang.rust-analyzer": true,
-    "rogalmic.bash-debug": true,
-    "mads-hartmann.bash-ide-vscode": true,
-    "shakram02.bash-beautify": true,
-    "timonwong.shellcheck": true,
-    "lizebang.bash-extension-pack": true,
-    "Remisa.shellman": true,
-    "rpinski.shebang-snippets": true,
-    "be5invis.toml": true,
-    "BernardXiong.env-vscode": true,
-    "dunstontc.vscode-docker-syntax": true,
-    "iceyer.toml-formatter": true,
-    "Nixon.env-cmd-file-syntax": true,
-    "mindaro-dev.file-downloader": true,
-    "maciejdems.add-to-gitignore": true,
-    "pfwobcke.vscode-vdf": true,
-    "svipas.prettier-plus": true,
-    "Weilence.conf-formatter": true,
-    "yzhang.markdown-all-in-one": true,
-    "rogalmic.zsh-debug": true,
-    "dual.zsh-completion-script": true,
-    "bmalehorn.shell-syntax": true,
-    "pinage404.bash-extension-pack": true,
-    "formulahendry.code-runner": true,
-    "jeff-hykin.better-shellscript-syntax": true,
-    "mkhl.direnv": true,
-    "spmeesseman.vscode-taskexplorer": true,
-    "p1c2u.docker-compose": true,
-    "dreamcatcher45.podmanager": true,
-    "ahmadalli.vscode-nginx-conf": true,
-    "eamodio.gitlens": true,
-    "sorbet.sorbet-vscode-extension": true,
-    "sum-packer.shell-extension-summary": true,
-    "bierner.markdown-yaml-preamble": true,
-    "DanielSanMedium.dscodegpt": true,
-    "feiskyer.chatgpt-copilot": true,
     // Disabled Extensions
     "GitHub.remotehub": false,
     "ms-vscode.azure-repos": false,
     "ms-python.vscode-pylance": false,
-    "ms-azuretools": false,
-    "ms-edgedevtools.vscode-edge-devtools": false,
-    "shd101wyy.markdown-preview-enhanced": false,
-    "m417z.regedit": false,
-    "keesschollaart.vscode-home-assistant": false,
-    "DavidAnson.vscode-markdownlint": false,
-    "ms-vscode.vscode-websearchforcopilot": false
+    "ms-azuretools": false
   },
   //// GitHub Coplilot
   "inlineChat.enableV2": true,
@@ -279,11 +128,14 @@
   "github.copilot.chat.followUps": "firstOnly",
   "github.copilot.renameSuggestions.triggerAutomatically": false,
   "github.copilot.chat.editor.temporalContext.enabled": true,
-  "github.copilot.chat.completionContext.typescript.mode": "off",
-  "github.copilot.chat.byok.ollamaEndpoint": "https://ollama.truenas.darkcatalist.com",
+  "github.copilot.chat.completionContext.typescript.mode": "sidecar",
   "github.copilot.chat.localeOverride": "en",
   "github.copilot.chat.codesearch.enabled": true,
   "github.copilot.chat.agent.thinkingTool": true,
+  "github.copilot.enable": { "*": false },
+  "github.copilot.inlineSuggest.enable": false,
+  "github.copilot.suggestionDelayMs": 999999,
+  "github.copilot.editor.enableAutoCompletions": false,
   //// Notebook
   "notebook.defaultFormatter": "esbenp.prettier-vscode",
   "notebook.output.fontFamily": "Cascadia Code",
@@ -293,6 +145,7 @@
   "terminal.integrated.detectLocale": "on",
   "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.mouseWheelZoom": true,
   "terminal.integrated.cursorStyle": "line",
   "terminal.integrated.fontFamily": "Cascadia Code",
@@ -305,96 +158,40 @@
   //// Docker
   "docker.extension.enableComposeLanguageServer": true,
   "docker.contexts.showInStatusBar": true,
-  //// Security
-  "security.workspace.trust.untrustedFiles": "open",
   "security.workspace.trust.banner": "untilDismissed",
-  "security.workspace.trust.startupPrompt": "once",
   //// Telemtry
   "telemetry.telemetryLevel": "off",
   "redhat.telemetry.enabled": false,
   "gitlens.telemetry.enabled": false,
+  "telemetry.feedback.enabled": false,
   "http.proxyStrictSSL": false,
   "http.electronFetch": true,
   "http.proxyAuthorization": null,
-  //// Remote SSH
-  "remote.SSH.remotePlatform": {
-    "macos.homelab.darkcatalist.com": "macOS",
-    //proxmox
-    "caraxes.homelab.darkcatalist.com": "linux",
-    "meraxes.homelab.darkcatalist.com": "linux",
-    "wyvern.homelab.darkcatalist.com": "linux",
-    "syrax.homelab.darkcatalist.com": "linux",
-    //NAS
-    "truenas.homelab.darkcatalist.com": "linux",
-    "unraid.homelab.darkcatalist.com": "linux",
-    //raspi
-    "raspi.homelab.darkcatalist.com": "linux",
-    "raspi4.homelab.darkcatalist.com": "linux",
-    "raspi5.homelab.darkcatalist.com": "linux",
-    //docker
-    "docker01.homelab.darkcatalist.com": "linux",
-    "docker02.homelab.darkcatalist.com": "linux",
-    "docker03.homelab.darkcatalist.com": "linux",
-    "docker04.homelab.darkcatalist.com": "linux",
-    "dockerlxc.homelab.darkcatalist.com": "linux",
-    //ipasrv
-    "ipasrv01.homelab.darkcatalist.com": "linux",
-    "ipasrv02.homelab.darkcatalist.com": "linux",
-    "ipasrv03.homelab.darkcatalist.com": "linux",
-    "ipasrv04.homelab.darkcatalist.com": "linux",
-    //adguard
-    "adguard01.homelab.darkcatalist.com": "linux",
-    "adguard02.homelab.darkcatalist.com": "linux",
-    "adguard03.homelab.darkcatalist.com": "linux",
-    "adguard04.homelab.darkcatalist.com": "linux",
-    //pihole
-    "pihole01.homelab.darkcatalist.com": "linux",
-    "pihole02.homelab.darkcatalist.com": "linux",
-    "pihole03.homelab.darkcatalist.com": "linux",
-    "pihole04.homelab.darkcatalist.com": "linux",
-    //services
-    "code.homelab.darkcatalist.com": "linux",
-    "syslog01.homelab.darkcatalist.com": "linux",
-    "database01.homelab.darkcatalist.com": "linux",
-    "database02.homelab.darkcatalist.com": "linux",
-    //VMs
-    "fedora.homelab.darkcatalist.com": "linux",
-    "linuxmint.homelab.darkcatalist.com": "linux",
-    "lmde.homelab.darkcatalist.com": "linux",
-    "ansible.homelab.darkcatalist.com": "linux",
-    "github.homelab.darkcatalist.com": "linux",
-    "cachyos.homelab.darkcatalist.com": "linux",
-    "steamos.homelab.darkcatalist.com": "linux",
-    "bazzite.homelab.darkcatalist.com": "linux",
-    "ubuntuzfs.homelab.darkcatalist.com": "linux",
-    "chimera.homelab.darkcatalist.com": "linux",
-    "archsteam.homelab.darkcatalist.com": "linux",
-    "steamdeck.homelab.darkcatalist.com": "linux",
-    "steamdeckwifi.homelab.darkcatalist.com": "linux"
-  },
   /* git */
   "git.openRepositoryInParentFolders": "always",
   "git.untrackedChanges": "separate",
   "git.enableCommitSigning": true,
   "git.confirmSync": false,
   //// GitLens
-  "gitlens.ai.ollama.url": "https://openwebui.services.darkcatalist.com/ollama",
+  "gitlens.ai.ollama.url": "https://ollama.services.darkcatalist.com",
   /* Language Features */
   //// Python Language Settings
   "python.analysis.autoImportCompletions": true,
   "python.languageServer": "Jedi",
   "python.analysis.languageServerMode": "default",
   "python.venvPath": "$HOME/.local/share/pyzfs",
-  "python.autoComplete.extraPaths": [],
-  "python.analysis.fixAll": ["source.unusedImports"],
+  "python.autoComplete.extraPaths": [ ],
+  "python.analysis.fixAll": [ "source.unusedImports" ],
   "[python]": {
-    "editor.formatOnType": false
+    "editor.formatOnType": false,
+    "editor.defaultFormatter": "ms-python.black-formatter"
   },
   //// Ansible Language Settings
   "ansible.python.interpreterPath": "~/.local/share/pyzfs/bin/python",
   "ansibleServer.trace.server": "verbose",
   "ansible.executionEnvironment.enabled": true,
   //// Json Language Settings
+  "json.format.keepLines": true,
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features",
     "editor.formatOnSave": false
@@ -469,7 +266,7 @@
   },
   //bash
   "[shellscript]": {
-    "editor.defaultFormatter": "shakram02.bash-beautify"
+    "editor.defaultFormatter": "foxundermoon.shell-format"
   },
   //javascript
   "[javascript]": {
@@ -480,11 +277,13 @@
   "markdown.server.log": "debug",
   "markdown.occurrencesHighlight.enabled": true,
   "markdown.preview.openMarkdownLinks": "inEditor",
-  "markdown.extension.preview.autoShowPreviewToSide": true,
+  "markdown.extension.preview.autoShowPreviewToSide": false,
   "markdown.extension.print.theme": "dark",
   "markdown.extension.completion.enabled": true,
   "markdown-preview-enhanced.frontMatterRenderingOption": "code block",
   //html
   "html.format.enable": false,
-  "html.format.indentInnerHtml": true
+  "html.format.indentInnerHtml": true,
+  "window.zoomLevel": 1,
+  "security.workspace.trust.untrustedFiles": "open",
 }

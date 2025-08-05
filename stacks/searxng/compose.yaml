@@ -1,0 +1,81 @@
+services:
+  ################################################### SearXNG ###################################################
+  # Icon: https://cdn.jsdelivr.net/gh/loganmarchione/homelab-svg-assets//assets/searxng.svg
+  searxng:
+    image: searxng/searxng:latest
+    container_name: openwebui-searxng
+    hostname: openwebui-searxng
+    tty: true
+    environment:
+      # SearXNG Configuration
+      SEARXNG_HOSTNAME: http://openwebui-searxng:32080
+      SEARXNG_SETTINGS_PATH: /etc/searxng/settings.yml
+      SEARXNG_UWSGI_PATH: /etc/searxng/uwsgi.ini
+      SEARXNG_VALKEY_URL: valkey://openwebui-searxng-valkey:6379/0
+      SEARXNG_UWSGI_WORKERS: 10
+      SEARXNG_UWSGI_THREADS: 10
+      SEARXNG_BIND_ADDRESS: 0.0.0.0
+      SEARXNG_PORT: 8080
+      SEARXNG_LIMITER: false
+      SEARXNG_PUBLIC_INSTANCE: false
+      SEARXNG_DEBUG: false
+      SEARXNG_SECRET: ${NOMAD_APP_SERVICE_SECRET_KEY}
+      SEARXNG_IMAGE_PROXY: true
+      SEARXNG_STATIC_USE_HASH: true
+      REQUEST_TIMEOUT: 60
+      MAX_REQUEST_TIMEOUT: 120
+      POOL_CONNECTIONS: 50
+      POOL_MAXSIZE: 10
+      SEARXNG_KEEPALIVE_TIMEOUT: 75
+      SEARXNG_KEEPALIVE_REQUESTS: 1000
+    networks:
+      - default
+      - valkey
+    ports:
+      - 32080:8080 # External access port
+    volumes:
+      - ./configs/settings.yml:/etc/searxng/settings.yml:ro
+      - ./configs/uwsgi.ini:/etc/searxng/uwsgi.ini:ro
+      - ./configs/limiter.toml:/etc/searxng/limiter.toml:ro
+      - ./configs/favicons.toml:/etc/searxng/favicons.toml:ro
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: '1'
+    depends_on:
+      - valkey
+    labels:
+      - diun.enable=true
+    restart: unless-stopped
+  valkey:
+    image: valkey/valkey:8
+    container_name: openwebui-searxng-valkey
+    hostname: openwebui-searxng-valkey
+    tmpfs:
+      - /dev/shm:size=128m
+    networks:
+      - valkey
+    ports:
+      - 6379:6379
+    volumes:
+      - ${APPDATA}/valkey:/data
+    command: valkey-server --save 30 1 --loglevel warning
+    logging:
+      driver: json-file
+      options:
+        max-size: 1m
+        max-file: '1'
+    restart: unless-stopped
+networks:
+  default:
+    driver: bridge
+  valkey:
+    internal: true

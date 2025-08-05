@@ -1,7 +1,18 @@
-tabWidth: 4
+tabWidth: 2
 useTabs: false
 printWidth: 400
+endOfLine: lf
+insertFinalNewline: true
 overrides:
+  - files:
+      - '*.md'
+      - '*.markdown'
+    options:
+      printWidth: 80
+      proseWrap: preserve
+      endOfLine: lf
+      insertFinalNewline: true
+      parser: markdown
   - files:
       - '*.yml'
       - '*.yaml'
@@ -10,11 +21,16 @@ overrides:
       singleQuote: true
       printWidth: 400
       tabWidth: 2
+      endOfLine: lf
+      insertFinalNewline: true
       parser: yaml
   - files:
       - '*.json'
+      - '*.code-workspace'
     options:
       singleQuote: true
       printWidth: 100
-      tabWidth: 4
+      tabWidth: 2
+      endOfLine: lf
+      insertFinalNewline: true
       parser: json

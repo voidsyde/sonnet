@@ -1,3 +1,0 @@
-wgetcustom() {
-    wget $1
-}

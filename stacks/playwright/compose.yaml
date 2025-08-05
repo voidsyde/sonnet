@@ -1,0 +1,50 @@
+# openwebui.playwright.compose.yaml
+services:
+  playwright:
+    image: mcr.microsoft.com/playwright:${PLAYWRIGHT_VERSION:-v1.49.1-noble}
+    container_name: playwright
+    hostname: playwright
+    shm_size: 1g
+    ipc: host
+    stdin_open: true
+    tty: true
+    user: pwuser
+    init: true
+    working_dir: /home/pwuser
+    environment:
+      # Environment-based timeouts instead of CLI args
+      PLAYWRIGHT_TIMEOUT: 300000
+      PLAYWRIGHT_NAVIGATION_TIMEOUT: 90000 # Increased for PDFs
+      PLAYWRIGHT_DEFAULT_TIMEOUT: 45000 # Increased
+      # Browser launch arguments
+      PLAYWRIGHT_CHROMIUM_ARGS: >-
+        --no-sandbox
+        --disable-setuid-sandbox
+        --disable-dev-shm-usage
+        --disable-http2
+        --disable-gpu-sandbox
+        --disable-software-rasterizer
+        --disable-background-timer-throttling
+        --disable-backgrounding-occluded-windows
+        --disable-renderer-backgrounding
+        --disable-features=TranslateUI,VizDisplayCompositor
+        --js-flags="--max_old_space_size=8192"
+    command: /bin/sh -c "npx -y playwright@1.49.1 run-server --port 32051 --host 0.0.0.0"
+      0.0.0.0"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 32051:32051
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - -f
+        - http://localhost:32051/
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    labels:
+      - diun.enable=true
+    restart: unless-stopped

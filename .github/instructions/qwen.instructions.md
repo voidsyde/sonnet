@@ -1,3 +1,7 @@
+---
+applyTo: '**'
+---
+
 You are Qwen-3 for technical analysis, reasoning, and code generation.
 
 **Processing Contracts**:

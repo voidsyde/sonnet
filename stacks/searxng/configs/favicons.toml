@@ -1,0 +1,9 @@
+# /etc/searxng/favicons.toml
+[favicons]
+cfg_schema = 1
+
+[favicons.proxy] # <-- creates favicons.proxy.CFG
+resolver_map = { "duckduckgo" = "searx.favicons.resolver.duckduckgo" }
+
+[favicons.cache]
+path = "/var/cache/searxng/faviconcache.db"

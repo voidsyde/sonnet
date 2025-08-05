@@ -11,13 +11,19 @@
 *.sync.ffs_db
 *.backup
 
-# Obsidian
-.smart-env
+# Submodules
+# oh-my-zsh
+**bin/pip**
+**lib/pip/pip**
+**__pycache__**
+**/__pycache__
+**/.cache
+**/.coverage
 
-# Audio
-*.m4a
-*.mp4
-*.mp3
+# Linux Specific
+share/
+state/
+backup/
 
 # IntelliJ Idea
 .idea/*
@@ -103,5 +109,5 @@ fabric.properties
 .bak*
 
 # Node
-node_modules
-**python3.13
+**node_modules
+**python3**

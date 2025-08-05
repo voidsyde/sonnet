@@ -1,0 +1,84 @@
+# see https://docs.searxng.org/admin/settings/settings.html#settings-use-default-settings
+use_default_settings: true
+
+general:
+  # Debug mode, only for development. Is overwritten by ${SEARXNG_DEBUG}
+  debug: true
+  # displayed name
+  instance_name: "SearXNG"
+  # For example: https://example.com/privacy
+  privacypolicy_url: false
+  # use true to use your own donation page written in searx/info/en/donate.md
+  # use false to disable the donation link
+  donation_url: false
+  # mailto:contact@example.com
+  contact_url: false
+  # record stats
+  enable_metrics: true
+  # expose stats in open metrics format at /metrics
+  # leave empty to disable (no password set)
+  # open_metrics: <password>
+  open_metrics: "Pandu@123"
+
+brand:
+  new_issue_url: https://github.com/searxng/searxng/issues/new
+  docs_url: https://docs.searxng.org/
+  public_instances: https://searx.space
+  wiki_url: https://github.com/searxng/searxng/wiki
+  issue_url: https://github.com/searxng/searxng/issues
+  # custom:
+  #   maintainer: "Jon Doe"
+  #   # Custom entries in the footer: [title]: [link]
+  #   links:
+  #     Uptime: https://uptime.searxng.org/history/darmarit-org
+  #     About: "https://searxng.org"
+
+server:
+  # base_url is defined in the SEARXNG_BASE_URL environment variable, see .env and docker-compose.yml
+  # Is overwritten by ${SEARXNG_PORT} and ${SEARXNG_BIND_ADDRESS}
+  port: 8080
+  bind_address: "0.0.0.0"
+  # public URL of the instance, to ensure correct inbound links. Is overwritten
+  # by ${SEARXNG_BASE_URL}.
+
+  ###### DUMMY VALUE - REAL VALUE IS PASSED AS VARIABLE ######
+  secret_key: "" # change this!
+  # rate limit the number of request on the instance, block some bots.
+  # Is overwritten by ${SEARXNG_LIMITER}
+  limiter: true # can be disabled for a private instance
+  image_proxy: true
+  # enable features designed only for public instances.
+  # Is overwritten by ${SEARXNG_PUBLIC_INSTANCE}
+  public_instance: false
+
+valkey:
+  # URL to connect valkey database. Is overwritten by ${SEARXNG_VALKEY_URL}.
+  # https://docs.searxng.org/admin/settings/settings_valkey.html#settings-valkey
+  # url: false
+  # url: valkey://localhost:6379/0
+  url: valkey://openwebui-searxng-valkey:6379/0
+
+ui:
+  static_use_hash: true
+
+search:
+  # Filter results. 0: None, 1: Moderate, 2: Strict
+  safe_search: 0
+  # Existing autocomplete backends: "360search", "baidu", "brave", "dbpedia", "duckduckgo", "google", "yandex",
+  # "mwmbl", "naver", "seznam", "sogou", "startpage", "stract", "swisscows", "quark", "qwant", "wikipedia" -
+  # leave blank to turn it off by default.
+  autocomplete: ""
+  # Default search language - leave blank to detect from browser information or
+  # use codes from 'languages.py'
+  default_lang: ""
+  formats:
+    - html
+    - json # json is required
+  # remove format to deny access, use lower case.
+  # formats: [html, csv, json, rss]
+### Deprecated ###
+# redis:
+#   # URL to connect redis database. Is overwritten by ${SEARXNG_REDIS_URL}.
+#   # https://docs.searxng.org/admin/settings/settings_redis.html#settings-redis
+#   url: redis://redis:6379/0
+

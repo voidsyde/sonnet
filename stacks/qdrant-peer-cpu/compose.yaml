@@ -1,0 +1,21 @@
+# Qdrant Vector Database - Enhanced vector search performance
+# Icon: https://raw.githubusercontent.com/patrickstigler/unraid_app_templates/refs/heads/main/qdrant/qdrant.png
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    hostname: qdrant
+    environment:
+      QDRANT__SERVICE__HOST: 0.0.0.0
+      QDRANT__LOG_LEVEL: INFO
+      QDRANT__CLUSTER__ENABLED: true
+      # Currently if run mode is specific a config is picked with matching name
+      # but otherwise the config is always production.yaml & we are forcing production mode
+      # for consistency across all nodes
+      RUN_MODE: production
+    network_mode: host
+    command: ./qdrant --bootstrap 'http://${QDRANT_P2P_NODE}:6335'
+    volumes:
+      - ./configs/peer.yaml:/qdrant/config/production.yaml:ro
+      - ${APPDATA}/qdrant_data:/qdrant/storage
+    restart: unless-stopped

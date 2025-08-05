@@ -1,0 +1,51 @@
+services:
+  pgvector:
+    image: pgvector/pgvector:${PGVECTOR_VERSION:-pg17}
+    container_name: openwebui-pgvector
+    hostname: ${APP_SERVICE_HOST:-openwebui-pgvector}
+    env_file:
+      - .env
+    tmpfs:
+      - /dev/shm:size=128m
+    environment:
+      POSTGRES_USER: ${OPENWEBUI_PGVECTOR_USER}
+      POSTGRES_PASSWORD: ${OPENWEBUI_PGVECTOR_PASSWORD}
+      POSTGRES_DB: ${OPENWEBUI_PGVECTOR_DB}
+      PGVECTOR_MAX_VECTOR_LENGTH: ${OPENWEBUI_PGVECTOR_MAX_VECTOR_LENGTH}
+      POSTGRES_MAX_CONNECTIONS: ${OPENWEBUI_POSTGRES_MAX_CONNECTIONS}
+      PGVECTOR_CHUNK_SIZE: ${OPENWEBUI_PGVECTOR_CHUNK_SIZE}
+      UVICORN_WORKERS: ${OPENWEBUI_UVICORN_WORKERS}
+    networks:
+      - default
+      - pgvector
+    ports:
+      - 5432:5432
+    volumes:
+      - ${APPDATA}/pgvector:/var/lib/postgresql/data
+    restart: unless-stopped
+  # Monitoring for postgres: Adminer
+  adminer:
+    image: adminer:latest
+    container_name: openwebui-adminer
+    hostname: openwebui-adminer
+    env_file:
+      - .env
+    environment:
+      PUID: ${APP_UID:-568}
+      PGID: ${APP_GID:-568}
+      TZ: ${TZ:-America/Los_Angeles}
+      ADMINER_PLUGINS: ${OPENWEBUI_ADMINER_PLUGINS:-tables-filter tinymce}
+      ADMINER_DEFAULT_SERVER: ${OPENWEBUI_ADMINER_DEFAULT_SERVER:-openwebui-pgvector}
+    networks:
+      - default
+      - pgvector
+    ports:
+      - ${ADMINER_PORT:-38181}:8080
+    depends_on:
+      - pgvector
+    restart: unless-stopped
+networks:
+  default:
+    driver: bridge
+  pgvector:
+    internal: true
