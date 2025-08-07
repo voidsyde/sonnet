@@ -1,0 +1,31 @@
+services:
+  codium:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: codium
+    hostname: codium
+    env_file:
+      - .env
+    networks:
+      - default
+    ports:
+      - 8443:8443
+    volumes:
+      ######################## Apt ########################
+      - ./configs/apt-cacher-ng.conf:/etc/apt/apt.conf.d/apt-cacher-ng
+      - ./configs/sudo.conf:/etc/sudoers.d/sudo.conf
+      - ./configs/sources.list:/etc/apt/sources.list
+      - ./configs/ubuntu.sources:/etc/apt/sources.list.d/ubuntu.sources
+      ######################## Config ########################
+      - ${APPDATA}/config:/config
+      - ${APPDATA}/linuxbrew:/home/linuxbrew
+      ######################## Workspaces ########################
+      - ${APPDATA}/workspace:/config/workspace
+      - ${STACKS}:/config/workspace/stacks
+      - ${JUPYTER}:/config/workspace/jupyter
+      - ${SEARXNG}:/config/workspace/searxng
+    labels:
+      diun.enable: true
+    restart: unless-stopped
+networks:
+  default:
+    driver: bridge
