@@ -9,6 +9,7 @@ overrides:
       - '*.markdown'
     options:
       printWidth: 80
+      tabWidth: 4
       proseWrap: preserve
       endOfLine: lf
       insertFinalNewline: true

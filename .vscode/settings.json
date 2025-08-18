@@ -266,7 +266,7 @@
   },
   //bash
   "[shellscript]": {
-    "editor.defaultFormatter": "foxundermoon.shell-format"
+    "editor.defaultFormatter": "mkhl.shfmt"
   },
   //javascript
   "[javascript]": {

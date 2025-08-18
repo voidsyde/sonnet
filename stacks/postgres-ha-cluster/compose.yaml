@@ -1,0 +1,171 @@
+x-health-defaults: &health_defaults
+  interval: 10s
+  timeout: 5s
+  retries: 5
+  start_period: 15s
+
+services:
+  etcd:
+    image: ${ETCD_IMAGE}
+    container_name: ${NODE_NAME}-etcd
+    network_mode: host
+    environment:
+      ETCD_NAME: '${ETCD_NAME}'
+      ETCD_DATA_DIR: '/var/lib/etcd'
+      ETCD_ADVERTISE_CLIENT_URLS: 'http://${HOST_CONS_IP}:2379'
+      ETCD_LISTEN_CLIENT_URLS: 'http://0.0.0.0:2379'
+      ETCD_INITIAL_ADVERTISE_PEER_URLS: 'http://${HOST_CONS_IP}:2380'
+      ETCD_LISTEN_PEER_URLS: 'http://0.0.0.0:2380'
+      ETCD_INITIAL_CLUSTER: '${ETCD_INITIAL_CLUSTER}'
+      ETCD_INITIAL_CLUSTER_STATE: 'new'
+      ETCD_INITIAL_CLUSTER_TOKEN: '${ETCD_TOKEN}'
+      ETCD_QUOTA_BACKEND_BYTES: '8589934592' # 8GiB
+    volumes:
+      - ${ETCD_DATA_DIR}:/var/lib/etcd
+    healthcheck:
+      <<: *health_defaults
+      test: ['CMD-SHELL', 'wget -qO- http://127.0.0.1:2379/health | grep -q ''"health":"true"''']
+    deploy:
+      resources:
+        reservations:
+          cpus: '${ETCD_RES_CPUS_RESERVATION}'
+          memory: '${ETCD_RES_MEM_RESERVATION}'
+        limits:
+          cpus: '${ETCD_RES_CPUS_LIMIT}'
+          memory: '${ETCD_RES_MEM_LIMIT}'
+
+  patroni:
+    image: ${SPILO_IMAGE}
+    container_name: ${NODE_NAME}-patroni
+    network_mode: host
+    environment:
+      PATRONI_NAME: '${NODE_NAME}'
+      PATRONI_SCOPE: '${PATRONI_SCOPE}'
+      PATRONI_LOG_LEVEL: '${PATRONI_LOG_LEVEL}'
+      PATRONI_RESTAPI_LISTEN: '${PATRONI_REST_IP}:${PATRONI_REST_PORT}'
+      PATRONI_RESTAPI_CONNECT_ADDRESS: '${PATRONI_REST_IP}:${PATRONI_REST_PORT}'
+      PATRONI_ETCD3_HOSTS: '${ETCD_ENDPOINTS}'
+
+      # Postgres listener on replication network only
+      PATRONI_POSTGRESQL_LISTEN: '${HOST_REPL_IP}:5432'
+      PATRONI_POSTGRESQL_CONNECT_ADDRESS: '${HOST_REPL_IP}:5432'
+      PATRONI_POSTGRESQL_DATA_DIR: '/home/postgres/pgdata'
+
+      # Bootstrap users
+      PATRONI_SUPERUSER_USERNAME: '${PATRONI_SUPERUSER_USERNAME}'
+      PATRONI_SUPERUSER_PASSWORD: '${PATRONI_SUPERUSER_PASSWORD}'
+      PATRONI_REPLICATION_USERNAME: '${PATRONI_REPLICATION_USERNAME}'
+      PATRONI_REPLICATION_PASSWORD: '${PATRONI_REPLICATION_PASSWORD}'
+
+      # Synchronous replication
+      PATRONI_SYNCHRONOUS_MODE: '${PATRONI_SYNCHRONOUS_MODE}'
+      PATRONI_SYNCHRONOUS_MODE_STRICT: '${PATRONI_SYNCHRONOUS_MODE_STRICT}'
+      PATRONI_CANDIDATE_PRIORITY: '${PATRONI_CANDIDATE_PRIORITY}'
+
+      # PostgreSQL parameters
+      PATRONI_POSTGRESQL_PARAMETERS__hot_standby: 'on'
+      PATRONI_POSTGRESQL_PARAMETERS__wal_level: 'replica'
+      PATRONI_POSTGRESQL_PARAMETERS__max_wal_senders: '20'
+      PATRONI_POSTGRESQL_PARAMETERS__max_replication_slots: '20'
+      PATRONI_POSTGRESQL_PARAMETERS__synchronous_commit: 'on'
+      PATRONI_POSTGRESQL_PARAMETERS__synchronous_standby_names: '${PATRONI_SYNC_STANDBY_NAMES}'
+      PATRONI_POSTGRESQL_PARAMETERS__shared_buffers: '4GB'
+      PATRONI_POSTGRESQL_PARAMETERS__effective_cache_size: '12GB'
+
+      # pg_hba additions for monitoring and client VLAN
+      PATRONI_POSTGRESQL_PGHBA: >
+        ["host all all 127.0.0.1/32 scram-sha-256",
+         "host all all ${REPL_SUBNET} scram-sha-256",
+         "host all all ${CLIENT_SUBNET} scram-sha-256"]
+
+    volumes:
+      - ${DATA_DIR}:/home/postgres/pgdata
+    depends_on:
+      - etcd
+    healthcheck:
+      <<: *health_defaults
+      test: ['CMD-SHELL', 'curl -fsS http://127.0.0.1:${PATRONI_REST_PORT}/health >/dev/null']
+    deploy:
+      resources:
+        reservations:
+          cpus: '${PATRONI_RES_CPUS_RESERVATION}'
+          memory: '${PATRONI_RES_MEM_RESERVATION}'
+        limits:
+          cpus: '${PATRONI_RES_CPUS_LIMIT}'
+          memory: '${PATRONI_RES_MEM_LIMIT}'
+    shm_size: '${PATRONI_SHM_SIZE}'
+
+  haproxy:
+    image: ${HAPROXY_IMAGE}
+    container_name: ${NODE_NAME}-haproxy
+    network_mode: host
+    environment:
+      HAPROXY_PORT: '${HAPROXY_PORT}'
+      HAPROXY_BACKEND_IPS: '${HAPROXY_BACKEND_IPS}'
+      PATRONI_REST_PORT: '${PATRONI_REST_PORT}'
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    depends_on:
+      - patroni
+    healthcheck:
+      <<: *health_defaults
+      test: ['CMD-SHELL', 'nc -z 127.0.0.1 ${HAPROXY_PORT}']
+
+  pgbouncer:
+    image: ${PGBOUNCER_IMAGE}
+    container_name: ${NODE_NAME}-pgbouncer
+    ports: []
+    environment:
+      # pgbouncer will connect to local haproxy for leader routing
+      DATABASE_URL: 'host=127.0.0.1 port=${HAPROXY_PORT}'
+      # Auth configuration provided via mounted config
+    volumes:
+      - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini:ro
+      - ./pgbouncer/users.txt:/etc/pgbouncer/users.txt:ro
+    depends_on:
+      - haproxy
+    healthcheck:
+      <<: *health_defaults
+      test: ['CMD-SHELL', 'nc -z 127.0.0.1 ${PGBOUNCER_PORT}']
+    networks:
+      client_net:
+        ipv4_address: ${PGBOUNCER_IP}
+
+  postgres_exporter:
+    image: ${POSTGRES_EXPORTER_IMAGE}
+    container_name: ${NODE_NAME}-postgres-exporter
+    network_mode: host
+    environment:
+      DATA_SOURCE_URI: '127.0.0.1:5432/postgres?sslmode=disable'
+      DATA_SOURCE_USER: '${MONITOR_USERNAME}'
+      DATA_SOURCE_PASS: '${MONITOR_PASSWORD}'
+    depends_on:
+      - patroni
+    healthcheck:
+      <<: *health_defaults
+      test: ['CMD-SHELL', 'wget -qO- http://127.0.0.1:9187/metrics >/dev/null']
+
+  pgbouncer_exporter:
+    image: ${PGBOUNCER_EXPORTER_IMAGE}
+    container_name: ${NODE_NAME}-pgbouncer-exporter
+    network_mode: host
+    environment:
+      PGBOUNCER_EXPORTER_HOST: '127.0.0.1'
+      PGBOUNCER_EXPORTER_PORT: '${PGBOUNCER_PORT}'
+      PGBOUNCER_EXPORTER_USER: '${PGBOUNCER_USERNAME}'
+      PGBOUNCER_EXPORTER_PASS: '${PGBOUNCER_PASSWORD}'
+    depends_on:
+      - pgbouncer
+    healthcheck:
+      <<: *health_defaults
+      test: ['CMD-SHELL', 'wget -qO- http://127.0.0.1:9127/metrics >/dev/null']
+
+networks:
+  client_net:
+    driver: macvlan
+    driver_opts:
+      parent: ${CLIENT_IFACE}
+    ipam:
+      config:
+        - subnet: ${CLIENT_SUBNET_CIDR}
+          gateway: ${CLIENT_GATEWAY}

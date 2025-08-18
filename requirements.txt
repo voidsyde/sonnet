@@ -1,3 +1,16 @@
+# VSCode
+# pycparser
+# python-dateutil
+# pytz
+# pyzfs
+# six
+# tabulate
+# tzdata
+# ssort
+# autoflake
+# shed
+# isort
+
 fastapi==0.115.7
 uvicorn[standard]==0.34.2
 pydantic==2.10.6
@@ -8,7 +21,7 @@ python-jose==3.4.0
 passlib[bcrypt]==1.7.4
 
 requests==2.32.4
-aiohttp>=3.12.14
+aiohttp==3.11.11
 async-timeout
 aiocache
 aiofiles
@@ -81,7 +94,7 @@ sentencepiece
 soundfile==0.13.1
 azure-ai-documentintelligence==1.0.2
 
-pillow>=11.3.0
+pillow==11.2.1
 opencv-python-headless==4.11.0.86
 rapidocr-onnxruntime==1.4.4
 rank-bm25==0.2.2
@@ -117,7 +130,6 @@ google-cloud-storage==2.19.0
 
 azure-identity==1.21.0
 azure-storage-blob==12.24.1
-
 
 ## LDAP
 ldap3==2.9.1

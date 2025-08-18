@@ -1,0 +1,802 @@
+[
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "glob",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "glob",
+        "description": "glob",
+        "detail": "glob",
+        "documentation": {}
+    },
+    {
+        "label": "subprocess",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "subprocess",
+        "description": "subprocess",
+        "detail": "subprocess",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "SudoWrapper",
+        "importPath": "sudo_wrapper",
+        "description": "sudo_wrapper",
+        "isExtraImport": true,
+        "detail": "sudo_wrapper",
+        "documentation": {}
+    },
+    {
+        "label": "SudoWrapper",
+        "importPath": "sudo_wrapper",
+        "description": "sudo_wrapper",
+        "isExtraImport": true,
+        "detail": "sudo_wrapper",
+        "documentation": {}
+    },
+    {
+        "label": "SudoWrapper",
+        "importPath": "sudo_wrapper",
+        "description": "sudo_wrapper",
+        "isExtraImport": true,
+        "detail": "sudo_wrapper",
+        "documentation": {}
+    },
+    {
+        "label": "SudoWrapper",
+        "importPath": "sudo_wrapper",
+        "description": "sudo_wrapper",
+        "isExtraImport": true,
+        "detail": "sudo_wrapper",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "librosa",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "librosa",
+        "description": "librosa",
+        "detail": "librosa",
+        "documentation": {}
+    },
+    {
+        "label": "librosa.display",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "librosa.display",
+        "description": "librosa.display",
+        "detail": "librosa.display",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "extract_info_from_conf",
+        "kind": 2,
+        "importPath": "etc.nginx-proxy-manager.scripts.extract-hosts",
+        "description": "etc.nginx-proxy-manager.scripts.extract-hosts",
+        "peekOfCode": "def extract_info_from_conf(conf_path):\n    hostnames = []\n    ip = None\n    port = None\n    protocol = \"http\"  # default\n    try:\n        with open(conf_path, \"r\") as f:\n            content = f.read()\n    except Exception as e:\n        print(f\"Error reading {conf_path}: {e}\")",
+        "detail": "etc.nginx-proxy-manager.scripts.extract-hosts",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "etc.nginx-proxy-manager.scripts.extract-hosts",
+        "description": "etc.nginx-proxy-manager.scripts.extract-hosts",
+        "peekOfCode": "def main():\n    results = []\n    processed_count = 0\n    # Get all .conf files and sort them numerically\n    conf_files = glob.glob(os.path.join(PROXY_HOST_DIR, \"*.conf\"))\n    conf_files.sort(key=lambda x: int(os.path.basename(x).replace(\".conf\", \"\")))\n    print(f\"Found {len(conf_files)} configuration files\")\n    for conf_file in conf_files:\n        hostnames, ip, port, protocol, conf_number = extract_info_from_conf(conf_file)\n        if hostnames:  # Only require hostnames, IP/port might be in includes",
+        "detail": "etc.nginx-proxy-manager.scripts.extract-hosts",
+        "documentation": {}
+    },
+    {
+        "label": "PROXY_HOST_DIR",
+        "kind": 5,
+        "importPath": "etc.nginx-proxy-manager.scripts.extract-hosts",
+        "description": "etc.nginx-proxy-manager.scripts.extract-hosts",
+        "peekOfCode": "PROXY_HOST_DIR = \"/home/sganti/ode/gitlab/separatrix/devops/devenv/etc/nginx-proxy-manager/proxy_host\"\nOUTPUT_FILE = \"extracted_proxy_hosts.conf\"\ndef extract_info_from_conf(conf_path):\n    hostnames = []\n    ip = None\n    port = None\n    protocol = \"http\"  # default\n    try:\n        with open(conf_path, \"r\") as f:\n            content = f.read()",
+        "detail": "etc.nginx-proxy-manager.scripts.extract-hosts",
+        "documentation": {}
+    },
+    {
+        "label": "OUTPUT_FILE",
+        "kind": 5,
+        "importPath": "etc.nginx-proxy-manager.scripts.extract-hosts",
+        "description": "etc.nginx-proxy-manager.scripts.extract-hosts",
+        "peekOfCode": "OUTPUT_FILE = \"extracted_proxy_hosts.conf\"\ndef extract_info_from_conf(conf_path):\n    hostnames = []\n    ip = None\n    port = None\n    protocol = \"http\"  # default\n    try:\n        with open(conf_path, \"r\") as f:\n            content = f.read()\n    except Exception as e:",
+        "detail": "etc.nginx-proxy-manager.scripts.extract-hosts",
+        "documentation": {}
+    },
+    {
+        "label": "defragment_btrfs",
+        "kind": 2,
+        "importPath": "lib.filesystems.btrfs_defrag",
+        "description": "lib.filesystems.btrfs_defrag",
+        "peekOfCode": "def defragment_btrfs(dir_path):\n    \"\"\"\n    Defragment a Btrfs filesystem directory with zstd compression.\n    Args:\n        dir_path (str): The directory path to defragment.\n    \"\"\"\n    if not dir_path:\n        print(\"Error: No directory specified.\")\n        print(\"Usage: python btrfs_defrag.py <directory_path>\")\n        sys.exit(1)",
+        "detail": "lib.filesystems.btrfs_defrag",
+        "documentation": {}
+    },
+    {
+        "label": "create_ext4_filesystem",
+        "kind": 2,
+        "importPath": "lib.filesystems.ext4_create",
+        "description": "lib.filesystems.ext4_create",
+        "peekOfCode": "def create_ext4_filesystem(label, device):\n    \"\"\"\n    Create an ext4 filesystem with specific options on a given device.\n    Args:\n        label (str): The label to assign to the filesystem.\n        device (str): The block device to format (e.g., '/dev/sda1').\n    \"\"\"\n    command = [\n        \"mkfs.ext4\",\n        \"-E\", \"stride=256,stripe-width=256\",",
+        "detail": "lib.filesystems.ext4_create",
+        "documentation": {}
+    },
+    {
+        "label": "create_xfs_filesystem",
+        "kind": 2,
+        "importPath": "lib.filesystems.xfs_create",
+        "description": "lib.filesystems.xfs_create",
+        "peekOfCode": "def create_xfs_filesystem(device, label):\n    \"\"\"\n    Create an XFS filesystem with specific options on a given device.\n    Args:\n        device (str): The block device to format (e.g., '/dev/sda1').\n        label (str): The label to assign to the filesystem.\n    \"\"\"\n    command = [\n        \"mkfs.xfs\",\n        \"-f\",",
+        "detail": "lib.filesystems.xfs_create",
+        "documentation": {}
+    },
+    {
+        "label": "install_flatpaks",
+        "kind": 2,
+        "importPath": "lib.flatpak.flatpak-install",
+        "description": "lib.flatpak.flatpak-install",
+        "peekOfCode": "def install_flatpaks(apps):\n    try:\n        # Construct the Flatpak command with user-specified applications\n        command = [\"flatpak\", \"--user\", \"install\", \"-y\"] + apps\n        print(f\"Running command: {' '.join(command)}\")\n        subprocess.run(command, check=True)\n    except subprocess.CalledProcessError as e:\n        print(f\"Error occurred during Flatpak installation: {e}\")\n        sys.exit(1)\nif __name__ == \"__main__\":",
+        "detail": "lib.flatpak.flatpak-install",
+        "documentation": {}
+    },
+    {
+        "label": "install_flatpaks",
+        "kind": 2,
+        "importPath": "lib.flatpak.flatpak-reinstall",
+        "description": "lib.flatpak.flatpak-reinstall",
+        "peekOfCode": "def install_flatpaks(apps):\n    \"\"\"\n    Installs the given list of Flatpak applications.\n    :param apps: List of Flatpak application IDs.\n    \"\"\"\n    for app in apps:\n        try:\n            print(f\"Installing {app}...\")\n            subprocess.run([\"flatpak\", \"--user\", \"install\",\n                           \"-y\", \"flathub\", app], check=True)",
+        "detail": "lib.flatpak.flatpak-reinstall",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "lib.flatpak.flatpak-reinstall",
+        "description": "lib.flatpak.flatpak-reinstall",
+        "peekOfCode": "def main():\n    \"\"\"\n    Main function to handle input and call the installation function.\n    \"\"\"\n    if len(sys.argv) != 2:\n        print(\"Usage: python script.py <json_file_path>\")\n        sys.exit(1)\n    file_path = sys.argv[1]\n    try:\n        with open(file_path, \"r\") as file:",
+        "detail": "lib.flatpak.flatpak-reinstall",
+        "documentation": {}
+    },
+    {
+        "label": "repair_flatpaks",
+        "kind": 2,
+        "importPath": "lib.flatpak.flatpak-repair",
+        "description": "lib.flatpak.flatpak-repair",
+        "peekOfCode": "def repair_flatpaks():\n    try:\n        # Construct the Flatpak command with user-specified applications\n        command = [\"flatpak\", \"--user\", \"repair\"]\n        print(f\"Running command: {' '.join(command)}\")\n        subprocess.run(command, check=True)\n    except subprocess.CalledProcessError as e:\n        print(f\"Error occurred during Flatpak installation: {e}\")\n        sys.exit(1)\nif __name__ == \"__main__\":",
+        "detail": "lib.flatpak.flatpak-repair",
+        "documentation": {}
+    },
+    {
+        "label": "search_flatpaks",
+        "kind": 2,
+        "importPath": "lib.flatpak.flatpak-search",
+        "description": "lib.flatpak.flatpak-search",
+        "peekOfCode": "def search_flatpaks(query):\n    try:\n        # Construct the Flatpak search command\n        command = [\"flatpak\", \"--user\", \"search\"] + query\n        print(f\"Running command: {' '.join(command)}\")\n        subprocess.run(command, check=True)\n    except subprocess.CalledProcessError as e:\n        print(f\"Error occurred during Flatpak search: {e}\")\n        sys.exit(1)\nif __name__ == \"__main__\":",
+        "detail": "lib.flatpak.flatpak-search",
+        "documentation": {}
+    },
+    {
+        "label": "uninstall_flatpaks",
+        "kind": 2,
+        "importPath": "lib.flatpak.flatpak-uninstall",
+        "description": "lib.flatpak.flatpak-uninstall",
+        "peekOfCode": "def uninstall_flatpaks(apps):\n    try:\n        # Construct the Flatpak command with user-specified applications\n        command = [\"flatpak\", \"--user\", \"uninstall\", \"-y\"] + apps\n        print(f\"Running command: {' '.join(command)}\")\n        subprocess.run(command, check=True)\n    except subprocess.CalledProcessError as e:\n        print(f\"Error occurred during Flatpak installation: {e}\")\n        sys.exit(1)\nif __name__ == \"__main__\":",
+        "detail": "lib.flatpak.flatpak-uninstall",
+        "documentation": {}
+    },
+    {
+        "label": "update_flatpaks",
+        "kind": 2,
+        "importPath": "lib.flatpak.flatpak-update",
+        "description": "lib.flatpak.flatpak-update",
+        "peekOfCode": "def update_flatpaks():\n    try:\n        # Construct the Flatpak command with user-specified applications\n        command = [\"flatpak\", \"--user\", \"repair\"]\n        print(f\"Running command: {' '.join(command)}\")\n        subprocess.run(command, check=True)\n    except subprocess.CalledProcessError as e:\n        print(f\"Error occurred during Flatpak installation: {e}\")\n        sys.exit(1)\nif __name__ == \"__main__\":",
+        "detail": "lib.flatpak.flatpak-update",
+        "documentation": {}
+    },
+    {
+        "label": "list_iommu_groups",
+        "kind": 2,
+        "importPath": "lib.iommu.check_iommu",
+        "description": "lib.iommu.check_iommu",
+        "peekOfCode": "def list_iommu_groups():\n    \"\"\"\n    Lists IOMMU groups and their associated devices.\n    \"\"\"\n    iommu_path = Path(\"/sys/kernel/iommu_groups\")\n    if not iommu_path.exists():\n        print(\n            f\"The path {iommu_path} does not exist. Ensure IOMMU is enabled.\")\n        sys.exit(1)\n    # Iterate over IOMMU groups",
+        "detail": "lib.iommu.check_iommu",
+        "documentation": {}
+    },
+    {
+        "label": "dataset_exists",
+        "kind": 2,
+        "importPath": "lib.proxmox.pm-storage-create",
+        "description": "lib.proxmox.pm-storage-create",
+        "peekOfCode": "def dataset_exists(dataset):\n    \"\"\"Check if a ZFS dataset exists.\"\"\"\n    try:\n        subprocess.run([\"zfs\", \"list\", \"-H\", \"-o\", \"name\", dataset], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\n        return True\n    except subprocess.CalledProcessError:\n        return False\ndef create_dataset(dataset, mountpoint=\"inherit\", blocksize=None):\n    \"\"\"Create a ZFS dataset with optional mountpoint and blocksize.\"\"\"\n    if dataset_exists(dataset):",
+        "detail": "lib.proxmox.pm-storage-create",
+        "documentation": {}
+    },
+    {
+        "label": "create_dataset",
+        "kind": 2,
+        "importPath": "lib.proxmox.pm-storage-create",
+        "description": "lib.proxmox.pm-storage-create",
+        "peekOfCode": "def create_dataset(dataset, mountpoint=\"inherit\", blocksize=None):\n    \"\"\"Create a ZFS dataset with optional mountpoint and blocksize.\"\"\"\n    if dataset_exists(dataset):\n        print(f\"Dataset '{dataset}' already exists. Skipping creation.\")\n        return\n    # Build the zfs create command\n    command = [\"zfs\", \"create\", \"-p\", \"-o\", \"refreservation=none\"]\n    if blocksize:\n        command.extend([\"-o\", f\"recordsize={blocksize}\"])\n    command.append(dataset)",
+        "detail": "lib.proxmox.pm-storage-create",
+        "documentation": {}
+    },
+    {
+        "label": "dataset_exists",
+        "kind": 2,
+        "importPath": "lib.proxmox.pm-storage-delete",
+        "description": "lib.proxmox.pm-storage-delete",
+        "peekOfCode": "def dataset_exists(dataset):\n    \"\"\"Check if a ZFS dataset exists.\"\"\"\n    try:\n        subprocess.run([\"zfs\", \"list\", \"-H\", \"-o\", \"name\", dataset], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\n        return True\n    except subprocess.CalledProcessError:\n        return False\ndef delete_proxmox_storage(storage_name):\n    \"\"\"Delete a Proxmox storage entry.\"\"\"\n    try:",
+        "detail": "lib.proxmox.pm-storage-delete",
+        "documentation": {}
+    },
+    {
+        "label": "delete_proxmox_storage",
+        "kind": 2,
+        "importPath": "lib.proxmox.pm-storage-delete",
+        "description": "lib.proxmox.pm-storage-delete",
+        "peekOfCode": "def delete_proxmox_storage(storage_name):\n    \"\"\"Delete a Proxmox storage entry.\"\"\"\n    try:\n        print(f\"Removing storage entry '{storage_name}' from Proxmox.\")\n        subprocess.run([\n            \"pvesm\", \"remove\", storage_name\n        ], check=True)\n        print(f\"Storage entry '{storage_name}' removed successfully.\")\n    except subprocess.CalledProcessError as e:\n        print(f\"Error removing storage '{storage_name}': {e}\")",
+        "detail": "lib.proxmox.pm-storage-delete",
+        "documentation": {}
+    },
+    {
+        "label": "delete_dataset",
+        "kind": 2,
+        "importPath": "lib.proxmox.pm-storage-delete",
+        "description": "lib.proxmox.pm-storage-delete",
+        "peekOfCode": "def delete_dataset(dataset):\n    \"\"\"Delete a ZFS dataset.\"\"\"\n    if not dataset_exists(dataset):\n        print(f\"Dataset '{dataset}' does not exist. Skipping deletion.\")\n        return\n    print(f\"Deleting dataset '{dataset}'.\")\n    try:\n        subprocess.run([\"zfs\", \"destroy\", \"-r\", dataset], check=True)\n        print(f\"Dataset '{dataset}' deleted successfully.\")\n    except subprocess.CalledProcessError as e:",
+        "detail": "lib.proxmox.pm-storage-delete",
+        "documentation": {}
+    },
+    {
+        "label": "dataset_exists",
+        "kind": 2,
+        "importPath": "lib.proxmox.qm-storage-create",
+        "description": "lib.proxmox.qm-storage-create",
+        "peekOfCode": "def dataset_exists(dataset):\n    \"\"\"Check if a ZFS dataset exists.\"\"\"\n    try:\n        subprocess.run([\"zfs\", \"list\", \"-H\", \"-o\", \"name\", dataset], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\n        return True\n    except subprocess.CalledProcessError:\n        return False\ndef add_proxmox_storage_via_api(storage_name, dataset, content):\n    \"\"\"Add storage to Proxmox via API.\"\"\"\n    try:",
+        "detail": "lib.proxmox.qm-storage-create",
+        "documentation": {}
+    },
+    {
+        "label": "add_proxmox_storage_via_api",
+        "kind": 2,
+        "importPath": "lib.proxmox.qm-storage-create",
+        "description": "lib.proxmox.qm-storage-create",
+        "peekOfCode": "def add_proxmox_storage_via_api(storage_name, dataset, content):\n    \"\"\"Add storage to Proxmox via API.\"\"\"\n    try:\n        print(f\"Adding storage '{storage_name}' to Proxmox.\")\n        subprocess.run(\n            [\n                \"pvesh\",\n                \"create\",\n                \"/storage\",\n                f\"--storage={storage_name}\",",
+        "detail": "lib.proxmox.qm-storage-create",
+        "documentation": {}
+    },
+    {
+        "label": "create_dataset",
+        "kind": 2,
+        "importPath": "lib.proxmox.qm-storage-create",
+        "description": "lib.proxmox.qm-storage-create",
+        "peekOfCode": "def create_dataset(dataset, mountpoint=\"inherit\", blocksize=None):\n    \"\"\"Create a ZFS dataset with optional mountpoint and blocksize.\"\"\"\n    if dataset_exists(dataset):\n        print(f\"Dataset '{dataset}' already exists. Skipping creation.\")\n        return\n    # Build the zfs create command\n    command = [\"zfs\", \"create\", \"-p\", \"-o\", \"refreservation=none\"]\n    if blocksize:\n        command.extend([\"-o\", f\"recordsize={blocksize}\"])\n    command.append(dataset)",
+        "detail": "lib.proxmox.qm-storage-create",
+        "documentation": {}
+    },
+    {
+        "label": "delete_proxmox_storage",
+        "kind": 2,
+        "importPath": "lib.proxmox.qm-storage-delete",
+        "description": "lib.proxmox.qm-storage-delete",
+        "peekOfCode": "def delete_proxmox_storage(storage_name):\n    \"\"\"Delete a Proxmox storage entry without removing the dataset.\"\"\"\n    try:\n        print(f\"Removing storage entry '{storage_name}' from Proxmox.\")\n        subprocess.run([\n            \"pvesm\", \"remove\", storage_name\n        ], check=True)\n        print(f\"Storage entry '{storage_name}' removed successfully.\")\n    except subprocess.CalledProcessError as e:\n        print(f\"Error removing storage '{storage_name}': {e}\")",
+        "detail": "lib.proxmox.qm-storage-delete",
+        "documentation": {}
+    },
+    {
+        "label": "get_cpu_cores",
+        "kind": 2,
+        "importPath": "lib.rclone.rclone-custom",
+        "description": "lib.rclone.rclone-custom",
+        "peekOfCode": "def get_cpu_cores():\n    \"\"\"Returns the number of CPU cores available on the system.\"\"\"\n    return os.cpu_count()\ndef parse_arguments():\n    \"\"\"Parses command-line arguments.\"\"\"\n    parser = argparse.ArgumentParser(description=\"Custom script for rclone and rsync operations.\")\n    parser.add_argument(\"source\", help=\"The source directory to copy\")\n    parser.add_argument(\"destination\", help=\"The destination directory to copy\")\n    parser.add_argument(\"-t\", \"--transfers\", type=int, default=get_cpu_cores() // 2,\n                        help=\"Number of rclone transfers (default: half of CPU cores)\")",
+        "detail": "lib.rclone.rclone-custom",
+        "documentation": {}
+    },
+    {
+        "label": "parse_arguments",
+        "kind": 2,
+        "importPath": "lib.rclone.rclone-custom",
+        "description": "lib.rclone.rclone-custom",
+        "peekOfCode": "def parse_arguments():\n    \"\"\"Parses command-line arguments.\"\"\"\n    parser = argparse.ArgumentParser(description=\"Custom script for rclone and rsync operations.\")\n    parser.add_argument(\"source\", help=\"The source directory to copy\")\n    parser.add_argument(\"destination\", help=\"The destination directory to copy\")\n    parser.add_argument(\"-t\", \"--transfers\", type=int, default=get_cpu_cores() // 2,\n                        help=\"Number of rclone transfers (default: half of CPU cores)\")\n    parser.add_argument(\"-c\", \"--checkers\", type=int, default=get_cpu_cores() // 2,\n                        help=\"Number of rclone checkers (default: half of CPU cores)\")\n    parser.add_argument(\"-r\", \"--rsync-opts\", default=\"-av\",",
+        "detail": "lib.rclone.rclone-custom",
+        "documentation": {}
+    },
+    {
+        "label": "confirm_warning",
+        "kind": 2,
+        "importPath": "lib.rclone.rclone-custom",
+        "description": "lib.rclone.rclone-custom",
+        "peekOfCode": "def confirm_warning(transfers, checkers):\n    \"\"\"Warns the user if transfers/checkers exceed available CPU cores.\"\"\"\n    cpu_cores = get_cpu_cores()\n    if transfers > cpu_cores or checkers > cpu_cores:\n        print(f\"Warning: The specified transfers ({transfers}) or checkers ({checkers}) exceed the number of available CPU cores ({cpu_cores}).\")\n        response = input(\"Do you want to continue? (y/n): \").strip().lower()\n        if response != \"y\":\n            print(\"Operation aborted by the user.\")\n            sys.exit(1)\ndef build_rclone_command(args):",
+        "detail": "lib.rclone.rclone-custom",
+        "documentation": {}
+    },
+    {
+        "label": "build_rclone_command",
+        "kind": 2,
+        "importPath": "lib.rclone.rclone-custom",
+        "description": "lib.rclone.rclone-custom",
+        "peekOfCode": "def build_rclone_command(args):\n    \"\"\"Builds the rclone command based on provided arguments.\"\"\"\n    cmd = [\n        \"sudo\", \"rclone\", \"copy\",\n        args.source,\n        args.destination,\n        f\"--transfers={args.transfers}\",\n        f\"--checkers={args.checkers}\",\n        \"--progress\",\n    ]",
+        "detail": "lib.rclone.rclone-custom",
+        "documentation": {}
+    },
+    {
+        "label": "build_rsync_command",
+        "kind": 2,
+        "importPath": "lib.rclone.rclone-custom",
+        "description": "lib.rclone.rclone-custom",
+        "peekOfCode": "def build_rsync_command(args):\n    \"\"\"Builds the rsync command based on provided arguments.\"\"\"\n    return [\n        \"sudo\", \"rsync\",\n        args.rsync_opts,\n        \"--progress\",\n        args.source,\n        args.destination\n    ]\ndef main():",
+        "detail": "lib.rclone.rclone-custom",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "lib.rclone.rclone-custom",
+        "description": "lib.rclone.rclone-custom",
+        "peekOfCode": "def main():\n    args = parse_arguments()\n    confirm_warning(args.transfers, args.checkers)\n    # Build and execute rclone command\n    rclone_cmd = build_rclone_command(args)\n    print(f\"Running rclone command: {' '.join(rclone_cmd)}\")\n    subprocess.run(rclone_cmd, check=True)\n    # Build and execute rsync command\n    rsync_cmd = build_rsync_command(args)\n    print(f\"Running rsync command: {' '.join(rsync_cmd)}\")",
+        "detail": "lib.rclone.rclone-custom",
+        "documentation": {}
+    },
+    {
+        "label": "dataset_exists",
+        "kind": 2,
+        "importPath": "lib.zfs.zfs-create",
+        "description": "lib.zfs.zfs-create",
+        "peekOfCode": "def dataset_exists(dataset):\n    \"\"\"Check if a ZFS dataset exists.\"\"\"\n    try:\n        subprocess.run([\"sudo\",\"zfs\", \"list\", \"-H\", \"-o\", \"name\", dataset], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)\n        return True\n    except subprocess.CalledProcessError:\n        return False\ndef create_dataset(dataset, mountpoint=\"inherit\", blocksize=None):\n    \"\"\"Create a ZFS dataset with optional mountpoint and blocksize.\"\"\"\n    if dataset_exists(dataset):",
+        "detail": "lib.zfs.zfs-create",
+        "documentation": {}
+    },
+    {
+        "label": "create_dataset",
+        "kind": 2,
+        "importPath": "lib.zfs.zfs-create",
+        "description": "lib.zfs.zfs-create",
+        "peekOfCode": "def create_dataset(dataset, mountpoint=\"inherit\", blocksize=None):\n    \"\"\"Create a ZFS dataset with optional mountpoint and blocksize.\"\"\"\n    if dataset_exists(dataset):\n        print(f\"Dataset '{dataset}' already exists. Skipping creation.\")\n        return\n    # Build the zfs create command\n    command = [\"zfs\", \"create\", \"-p\", \"-o\", \"refreservation=none\"]\n    if blocksize:\n        command.extend([\"-o\", f\"recordsize={blocksize}\"])\n    command.append(dataset)",
+        "detail": "lib.zfs.zfs-create",
+        "documentation": {}
+    },
+    {
+        "label": "run_command",
+        "kind": 2,
+        "importPath": "lib.zfs.zfs-destroy",
+        "description": "lib.zfs.zfs-destroy",
+        "peekOfCode": "def run_command(command):\n    \"\"\"Run a shell command and return the output.\"\"\"\n    try:\n        result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)\n        return result.stdout.strip()\n    except subprocess.CalledProcessError as e:\n        print(f\"Error: {e.stderr}\")\n        sys.exit(1)\ndef list_datasets(pool_name, keyword):\n    \"\"\"List ZFS datasets matching the pool name and keyword.\"\"\"",
+        "detail": "lib.zfs.zfs-destroy",
+        "documentation": {}
+    },
+    {
+        "label": "list_datasets",
+        "kind": 2,
+        "importPath": "lib.zfs.zfs-destroy",
+        "description": "lib.zfs.zfs-destroy",
+        "peekOfCode": "def list_datasets(pool_name, keyword):\n    \"\"\"List ZFS datasets matching the pool name and keyword.\"\"\"\n    command = f\"sudo zfs list -H -o name | grep {pool_name} | grep {keyword}\"\n    output = run_command(command)\n    return sorted(output.splitlines(), key=lambda x: x.count('/'), reverse=True)\ndef confirm_deletion(datasets):\n    \"\"\"Ask for user confirmation before deletion.\"\"\"\n    print(\"The following datasets will be deleted:\")\n    for dataset in datasets:\n        print(f\"  - {dataset}\")",
+        "detail": "lib.zfs.zfs-destroy",
+        "documentation": {}
+    },
+    {
+        "label": "confirm_deletion",
+        "kind": 2,
+        "importPath": "lib.zfs.zfs-destroy",
+        "description": "lib.zfs.zfs-destroy",
+        "peekOfCode": "def confirm_deletion(datasets):\n    \"\"\"Ask for user confirmation before deletion.\"\"\"\n    print(\"The following datasets will be deleted:\")\n    for dataset in datasets:\n        print(f\"  - {dataset}\")\n    confirm = input(\"\\nDo you want to proceed with deletion? (yes/no): \").strip().lower()\n    return confirm == \"yes\"\ndef destroy_datasets(datasets):\n    \"\"\"Destroy the listed ZFS datasets.\"\"\"\n    for dataset in datasets:",
+        "detail": "lib.zfs.zfs-destroy",
+        "documentation": {}
+    },
+    {
+        "label": "destroy_datasets",
+        "kind": 2,
+        "importPath": "lib.zfs.zfs-destroy",
+        "description": "lib.zfs.zfs-destroy",
+        "peekOfCode": "def destroy_datasets(datasets):\n    \"\"\"Destroy the listed ZFS datasets.\"\"\"\n    for dataset in datasets:\n        print(f\"Destroying {dataset}...\")\n        try:\n            command = f\"sudo zfs destroy -rv {dataset}\"\n            run_command(command)\n        except SystemExit:\n            print(f\"Skipping already deleted dataset: {dataset}\")\nif __name__ == \"__main__\":",
+        "detail": "lib.zfs.zfs-destroy",
+        "documentation": {}
+    },
+    {
+        "label": "search_zfs",
+        "kind": 2,
+        "importPath": "lib.zfs.zfs-find",
+        "description": "lib.zfs.zfs-find",
+        "peekOfCode": "def search_zfs(term):\n    try:\n        # Run the ZFS list command\n        result = subprocess.run(\n            [\"sudo\", \"zfs\", \"list\", \"-H\", \"-o\", \"name\"],\n            capture_output=True,\n            text=True,\n            check=True\n        )\n        # Filter the output for the search term",
+        "detail": "lib.zfs.zfs-find",
+        "documentation": {}
+    },
+    {
+        "label": "search_zfs",
+        "kind": 2,
+        "importPath": "lib.zfs.zfs-list",
+        "description": "lib.zfs.zfs-list",
+        "peekOfCode": "def search_zfs(term):\n    try:\n        # Run the ZFS list command\n        result = subprocess.run(\n            [\"sudo\", \"zfs\", \"list\"],\n            capture_output=True,\n            text=True,\n            check=True\n        )\n        # Filter the output for the search term",
+        "detail": "lib.zfs.zfs-list",
+        "documentation": {}
+    },
+    {
+        "label": "run_command",
+        "kind": 2,
+        "importPath": "lib.zfs.zfs-rename",
+        "description": "lib.zfs.zfs-rename",
+        "peekOfCode": "def run_command(command):\n    \"\"\"Run a shell command and return the output.\"\"\"\n    try:\n        result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)\n        return result.stdout.strip()\n    except subprocess.CalledProcessError as e:\n        print(f\"Error: {e.stderr}\")\n        sys.exit(1)\ndef rename_dataset(old_name, new_name):\n    \"\"\"Rename a ZFS dataset.\"\"\"",
+        "detail": "lib.zfs.zfs-rename",
+        "documentation": {}
+    },
+    {
+        "label": "rename_dataset",
+        "kind": 2,
+        "importPath": "lib.zfs.zfs-rename",
+        "description": "lib.zfs.zfs-rename",
+        "peekOfCode": "def rename_dataset(old_name, new_name):\n    \"\"\"Rename a ZFS dataset.\"\"\"\n    command = f\"sudo zfs rename {old_name} {new_name}\"\n    run_command(command)\n    print(f\"Dataset renamed from {old_name} to {new_name}\")\nif __name__ == \"__main__\":\n    if len(sys.argv) != 3:\n        print(f\"Usage: {sys.argv[0]} <old_name> <new_name>\")\n        sys.exit(1)\n    old_name = sys.argv[1]",
+        "detail": "lib.zfs.zfs-rename",
+        "documentation": {}
+    },
+    {
+        "label": "SudoWrapper",
+        "kind": 6,
+        "importPath": "lib.sudo_wrapper",
+        "description": "lib.sudo_wrapper",
+        "peekOfCode": "class SudoWrapper:\n    \"\"\"\n    A utility class for running commands with sudo elevation.\n    \"\"\"\n    @staticmethod\n    def run_with_sudo(command, check=True):\n        \"\"\"\n        Runs a command with sudo privileges.\n        Args:\n            command (list): The command to run as a list of arguments.",
+        "detail": "lib.sudo_wrapper",
+        "documentation": {}
+    },
+    {
+        "label": "_Known",
+        "kind": 6,
+        "importPath": "node_modules.flatted.python.flatted",
+        "description": "node_modules.flatted.python.flatted",
+        "peekOfCode": "class _Known:\n    def __init__(self):\n        self.key = []\n        self.value = []\nclass _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0",
+        "detail": "node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "_String",
+        "kind": 6,
+        "importPath": "node_modules.flatted.python.flatted",
+        "description": "node_modules.flatted.python.flatted",
+        "peekOfCode": "class _String:\n    def __init__(self, value):\n        self.value = value\ndef _array_keys(value):\n    keys = []\n    i = 0\n    for _ in value:\n        keys.append(i)\n        i += 1\n    return keys",
+        "detail": "node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "parse",
+        "kind": 2,
+        "importPath": "node_modules.flatted.python.flatted",
+        "description": "node_modules.flatted.python.flatted",
+        "peekOfCode": "def parse(value, *args, **kwargs):\n    json = _json.loads(value, *args, **kwargs)\n    wrapped = []\n    for value in json:\n        wrapped.append(_wrap(value))\n    input = []\n    for value in wrapped:\n        if isinstance(value, _String):\n            input.append(value.value)\n        else:",
+        "detail": "node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "stringify",
+        "kind": 2,
+        "importPath": "node_modules.flatted.python.flatted",
+        "description": "node_modules.flatted.python.flatted",
+        "peekOfCode": "def stringify(value, *args, **kwargs):\n    known = _Known()\n    input = []\n    output = []\n    i = int(_index(known, input, value))\n    while i < len(input):\n        output.append(_transform(known, input, input[i]))\n        i += 1\n    return _json.dumps(output, *args, **kwargs)",
+        "detail": "node_modules.flatted.python.flatted",
+        "documentation": {}
+    },
+    {
+        "label": "cmd",
+        "kind": 5,
+        "importPath": "sbin.dkms.dkms_install_helper",
+        "description": "sbin.dkms.dkms_install_helper",
+        "peekOfCode": "cmd = ['dkms', 'status']\nprocess = subprocess.Popen(cmd, stdout=subprocess.PIPE)\ndkms_status = process.communicate()[0].strip('\\n').split('\\n')\ndkms_status = [x.split(', ') for x in dkms_status]\n# Get kernel versions (probably crap).\ncmd = ['ls', '/var/lib/initramfs-tools/']\n# Alternative (for use with Arch Linux for example)\n# cmd = ['ls', '/usr/lib/modules/']\nprocess = subprocess.Popen(cmd, stdout=subprocess.PIPE)\nkernels = process.communicate()[0].strip('\\n').split('\\n')",
+        "detail": "sbin.dkms.dkms_install_helper",
+        "documentation": {}
+    },
+    {
+        "label": "process",
+        "kind": 5,
+        "importPath": "sbin.dkms.dkms_install_helper",
+        "description": "sbin.dkms.dkms_install_helper",
+        "peekOfCode": "process = subprocess.Popen(cmd, stdout=subprocess.PIPE)\ndkms_status = process.communicate()[0].strip('\\n').split('\\n')\ndkms_status = [x.split(', ') for x in dkms_status]\n# Get kernel versions (probably crap).\ncmd = ['ls', '/var/lib/initramfs-tools/']\n# Alternative (for use with Arch Linux for example)\n# cmd = ['ls', '/usr/lib/modules/']\nprocess = subprocess.Popen(cmd, stdout=subprocess.PIPE)\nkernels = process.communicate()[0].strip('\\n').split('\\n')\n# Parse output, 'modules' will contain all modules pointing to a set",
+        "detail": "sbin.dkms.dkms_install_helper",
+        "documentation": {}
+    },
+    {
+        "label": "dkms_status",
+        "kind": 5,
+        "importPath": "sbin.dkms.dkms_install_helper",
+        "description": "sbin.dkms.dkms_install_helper",
+        "peekOfCode": "dkms_status = process.communicate()[0].strip('\\n').split('\\n')\ndkms_status = [x.split(', ') for x in dkms_status]\n# Get kernel versions (probably crap).\ncmd = ['ls', '/var/lib/initramfs-tools/']\n# Alternative (for use with Arch Linux for example)\n# cmd = ['ls', '/usr/lib/modules/']\nprocess = subprocess.Popen(cmd, stdout=subprocess.PIPE)\nkernels = process.communicate()[0].strip('\\n').split('\\n')\n# Parse output, 'modules' will contain all modules pointing to a set\n# of versions.",
+        "detail": "sbin.dkms.dkms_install_helper",
+        "documentation": {}
+    },
+    {
+        "label": "dkms_status",
+        "kind": 5,
+        "importPath": "sbin.dkms.dkms_install_helper",
+        "description": "sbin.dkms.dkms_install_helper",
+        "peekOfCode": "dkms_status = [x.split(', ') for x in dkms_status]\n# Get kernel versions (probably crap).\ncmd = ['ls', '/var/lib/initramfs-tools/']\n# Alternative (for use with Arch Linux for example)\n# cmd = ['ls', '/usr/lib/modules/']\nprocess = subprocess.Popen(cmd, stdout=subprocess.PIPE)\nkernels = process.communicate()[0].strip('\\n').split('\\n')\n# Parse output, 'modules' will contain all modules pointing to a set\n# of versions.\nmodules = {}",
+        "detail": "sbin.dkms.dkms_install_helper",
+        "documentation": {}
+    },
+    {
+        "label": "cmd",
+        "kind": 5,
+        "importPath": "sbin.dkms.dkms_install_helper",
+        "description": "sbin.dkms.dkms_install_helper",
+        "peekOfCode": "cmd = ['ls', '/var/lib/initramfs-tools/']\n# Alternative (for use with Arch Linux for example)\n# cmd = ['ls', '/usr/lib/modules/']\nprocess = subprocess.Popen(cmd, stdout=subprocess.PIPE)\nkernels = process.communicate()[0].strip('\\n').split('\\n')\n# Parse output, 'modules' will contain all modules pointing to a set\n# of versions.\nmodules = {}\nfor entry in dkms_status:\n   module = entry[0]",
+        "detail": "sbin.dkms.dkms_install_helper",
+        "documentation": {}
+    },
+    {
+        "label": "process",
+        "kind": 5,
+        "importPath": "sbin.dkms.dkms_install_helper",
+        "description": "sbin.dkms.dkms_install_helper",
+        "peekOfCode": "process = subprocess.Popen(cmd, stdout=subprocess.PIPE)\nkernels = process.communicate()[0].strip('\\n').split('\\n')\n# Parse output, 'modules' will contain all modules pointing to a set\n# of versions.\nmodules = {}\nfor entry in dkms_status:\n   module = entry[0]\n   version = entry[1].split(': ')[0]\n   try:\n      modules[module].add(version)",
+        "detail": "sbin.dkms.dkms_install_helper",
+        "documentation": {}
+    },
+    {
+        "label": "kernels",
+        "kind": 5,
+        "importPath": "sbin.dkms.dkms_install_helper",
+        "description": "sbin.dkms.dkms_install_helper",
+        "peekOfCode": "kernels = process.communicate()[0].strip('\\n').split('\\n')\n# Parse output, 'modules' will contain all modules pointing to a set\n# of versions.\nmodules = {}\nfor entry in dkms_status:\n   module = entry[0]\n   version = entry[1].split(': ')[0]\n   try:\n      modules[module].add(version)\n   except KeyError:",
+        "detail": "sbin.dkms.dkms_install_helper",
+        "documentation": {}
+    },
+    {
+        "label": "modules",
+        "kind": 5,
+        "importPath": "sbin.dkms.dkms_install_helper",
+        "description": "sbin.dkms.dkms_install_helper",
+        "peekOfCode": "modules = {}\nfor entry in dkms_status:\n   module = entry[0]\n   version = entry[1].split(': ')[0]\n   try:\n      modules[module].add(version)\n   except KeyError:\n      # We don't have that module, add it.\n      modules[module] = set([version])\n# For each module, build all versions for all kernels.",
+        "detail": "sbin.dkms.dkms_install_helper",
+        "documentation": {}
+    },
+    {
+        "label": "reserved_blocks",
+        "kind": 5,
+        "importPath": "sbin.filesystems.ext4",
+        "description": "sbin.filesystems.ext4",
+        "peekOfCode": "reserved_blocks = 524288\nx = reserved_blocks * 4096 / 1024**3\n524288 * 4096 / 1024**3",
+        "detail": "sbin.filesystems.ext4",
+        "documentation": {}
+    },
+    {
+        "label": "x",
+        "kind": 5,
+        "importPath": "sbin.filesystems.ext4",
+        "description": "sbin.filesystems.ext4",
+        "peekOfCode": "x = reserved_blocks * 4096 / 1024**3\n524288 * 4096 / 1024**3",
+        "detail": "sbin.filesystems.ext4",
+        "documentation": {}
+    },
+    {
+        "label": "package_name",
+        "kind": 5,
+        "importPath": "sbin.python.arch",
+        "description": "sbin.python.arch",
+        "peekOfCode": "package_name = \"<package_name>\"\nsubprocess.run([\"sudo\", \"apt\", \"install\", \"-y\", package_name], check=True)",
+        "detail": "sbin.python.arch",
+        "documentation": {}
+    },
+    {
+        "label": "Filter",
+        "kind": 6,
+        "importPath": "sbin.python.moea",
+        "description": "sbin.python.moea",
+        "peekOfCode": "class Filter:\n    class Valves(BaseModel):\n        models: List[str] = Field(\n            default=[], description=\"List of models to use in the MoEA architecture.\"\n        )\n        openai_api_base: str = Field(\n            default=\"http://host.docker.internal:11434/v1\",\n            description=\"Base URL for Ollama API.\",\n        )\n        num_layers: int = Field(default=1, description=\"Number of MoEA layers.\")",
+        "detail": "sbin.python.moea",
+        "documentation": {}
+    },
+    {
+        "label": "package_name",
+        "kind": 5,
+        "importPath": "sbin.python.ubuntu",
+        "description": "sbin.python.ubuntu",
+        "peekOfCode": "package_name = \"<package_name>\"\nsubprocess.run([\"sudo\", \"apt\", \"install\", \"-y\", package_name], check=True)",
+        "detail": "sbin.python.ubuntu",
+        "documentation": {}
+    },
+    {
+        "label": "file_path",
+        "kind": 5,
+        "importPath": "src.python.sonic-analysis",
+        "description": "src.python.sonic-analysis",
+        "peekOfCode": "file_path = \"Disc 2 - Clair Obscur Expedition 33 Original Soundtrack (Act II) - 40 - Robe de jour.wav\"\n# Load the audio\ny, sr = librosa.load(file_path, sr=None)  # Preserve original sampling rate\n# Optional: downsample if memory is a concern\n# y = librosa.resample(y, orig_sr=sr, target_sr=22050)\n# sr = 22050\n# Compute audio features\nD = librosa.stft(y)\nS_db = librosa.amplitude_to_db(np.abs(D), ref=np.max)\nmel = librosa.feature.melspectrogram(y=y, sr=sr)",
+        "detail": "src.python.sonic-analysis",
+        "documentation": {}
+    },
+    {
+        "label": "D",
+        "kind": 5,
+        "importPath": "src.python.sonic-analysis",
+        "description": "src.python.sonic-analysis",
+        "peekOfCode": "D = librosa.stft(y)\nS_db = librosa.amplitude_to_db(np.abs(D), ref=np.max)\nmel = librosa.feature.melspectrogram(y=y, sr=sr)\nmel_db = librosa.power_to_db(mel, ref=np.max)\nchroma = librosa.feature.chroma_stft(y=y, sr=sr)\nmfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)\n# Plot\nfig, axes = plt.subplots(4, 1, figsize=(14, 20))\n# 1. Waveform\nlibrosa.display.waveshow(y, sr=sr, ax=axes[0])",
+        "detail": "src.python.sonic-analysis",
+        "documentation": {}
+    },
+    {
+        "label": "S_db",
+        "kind": 5,
+        "importPath": "src.python.sonic-analysis",
+        "description": "src.python.sonic-analysis",
+        "peekOfCode": "S_db = librosa.amplitude_to_db(np.abs(D), ref=np.max)\nmel = librosa.feature.melspectrogram(y=y, sr=sr)\nmel_db = librosa.power_to_db(mel, ref=np.max)\nchroma = librosa.feature.chroma_stft(y=y, sr=sr)\nmfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)\n# Plot\nfig, axes = plt.subplots(4, 1, figsize=(14, 20))\n# 1. Waveform\nlibrosa.display.waveshow(y, sr=sr, ax=axes[0])\naxes[0].set_title(\"Waveform\")",
+        "detail": "src.python.sonic-analysis",
+        "documentation": {}
+    },
+    {
+        "label": "mel",
+        "kind": 5,
+        "importPath": "src.python.sonic-analysis",
+        "description": "src.python.sonic-analysis",
+        "peekOfCode": "mel = librosa.feature.melspectrogram(y=y, sr=sr)\nmel_db = librosa.power_to_db(mel, ref=np.max)\nchroma = librosa.feature.chroma_stft(y=y, sr=sr)\nmfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)\n# Plot\nfig, axes = plt.subplots(4, 1, figsize=(14, 20))\n# 1. Waveform\nlibrosa.display.waveshow(y, sr=sr, ax=axes[0])\naxes[0].set_title(\"Waveform\")\n# 2. Mel Spectrogram",
+        "detail": "src.python.sonic-analysis",
+        "documentation": {}
+    },
+    {
+        "label": "mel_db",
+        "kind": 5,
+        "importPath": "src.python.sonic-analysis",
+        "description": "src.python.sonic-analysis",
+        "peekOfCode": "mel_db = librosa.power_to_db(mel, ref=np.max)\nchroma = librosa.feature.chroma_stft(y=y, sr=sr)\nmfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)\n# Plot\nfig, axes = plt.subplots(4, 1, figsize=(14, 20))\n# 1. Waveform\nlibrosa.display.waveshow(y, sr=sr, ax=axes[0])\naxes[0].set_title(\"Waveform\")\n# 2. Mel Spectrogram\nimg = librosa.display.specshow(mel_db, sr=sr, x_axis='time', y_axis='mel', ax=axes[1])",
+        "detail": "src.python.sonic-analysis",
+        "documentation": {}
+    },
+    {
+        "label": "chroma",
+        "kind": 5,
+        "importPath": "src.python.sonic-analysis",
+        "description": "src.python.sonic-analysis",
+        "peekOfCode": "chroma = librosa.feature.chroma_stft(y=y, sr=sr)\nmfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)\n# Plot\nfig, axes = plt.subplots(4, 1, figsize=(14, 20))\n# 1. Waveform\nlibrosa.display.waveshow(y, sr=sr, ax=axes[0])\naxes[0].set_title(\"Waveform\")\n# 2. Mel Spectrogram\nimg = librosa.display.specshow(mel_db, sr=sr, x_axis='time', y_axis='mel', ax=axes[1])\naxes[1].set_title(\"Mel Spectrogram\")",
+        "detail": "src.python.sonic-analysis",
+        "documentation": {}
+    },
+    {
+        "label": "mfcc",
+        "kind": 5,
+        "importPath": "src.python.sonic-analysis",
+        "description": "src.python.sonic-analysis",
+        "peekOfCode": "mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)\n# Plot\nfig, axes = plt.subplots(4, 1, figsize=(14, 20))\n# 1. Waveform\nlibrosa.display.waveshow(y, sr=sr, ax=axes[0])\naxes[0].set_title(\"Waveform\")\n# 2. Mel Spectrogram\nimg = librosa.display.specshow(mel_db, sr=sr, x_axis='time', y_axis='mel', ax=axes[1])\naxes[1].set_title(\"Mel Spectrogram\")\nfig.colorbar(img, ax=axes[1], format=\"%+2.f dB\")",
+        "detail": "src.python.sonic-analysis",
+        "documentation": {}
+    },
+    {
+        "label": "img",
+        "kind": 5,
+        "importPath": "src.python.sonic-analysis",
+        "description": "src.python.sonic-analysis",
+        "peekOfCode": "img = librosa.display.specshow(mel_db, sr=sr, x_axis='time', y_axis='mel', ax=axes[1])\naxes[1].set_title(\"Mel Spectrogram\")\nfig.colorbar(img, ax=axes[1], format=\"%+2.f dB\")\n# 3. Chroma Frequencies\nimg = librosa.display.specshow(chroma, y_axis='chroma', x_axis='time', sr=sr, ax=axes[2])\naxes[2].set_title(\"Chroma Frequencies\")\nfig.colorbar(img, ax=axes[2])\n# 4. MFCCs\nimg = librosa.display.specshow(mfcc, x_axis='time', sr=sr, ax=axes[3])\naxes[3].set_title(\"MFCC (Mel-Frequency Cepstral Coefficients)\")",
+        "detail": "src.python.sonic-analysis",
+        "documentation": {}
+    },
+    {
+        "label": "img",
+        "kind": 5,
+        "importPath": "src.python.sonic-analysis",
+        "description": "src.python.sonic-analysis",
+        "peekOfCode": "img = librosa.display.specshow(chroma, y_axis='chroma', x_axis='time', sr=sr, ax=axes[2])\naxes[2].set_title(\"Chroma Frequencies\")\nfig.colorbar(img, ax=axes[2])\n# 4. MFCCs\nimg = librosa.display.specshow(mfcc, x_axis='time', sr=sr, ax=axes[3])\naxes[3].set_title(\"MFCC (Mel-Frequency Cepstral Coefficients)\")\nfig.colorbar(img, ax=axes[3])\nplt.tight_layout()\nplt.show()",
+        "detail": "src.python.sonic-analysis",
+        "documentation": {}
+    },
+    {
+        "label": "img",
+        "kind": 5,
+        "importPath": "src.python.sonic-analysis",
+        "description": "src.python.sonic-analysis",
+        "peekOfCode": "img = librosa.display.specshow(mfcc, x_axis='time', sr=sr, ax=axes[3])\naxes[3].set_title(\"MFCC (Mel-Frequency Cepstral Coefficients)\")\nfig.colorbar(img, ax=axes[3])\nplt.tight_layout()\nplt.show()",
+        "detail": "src.python.sonic-analysis",
+        "documentation": {}
+    }
+]
